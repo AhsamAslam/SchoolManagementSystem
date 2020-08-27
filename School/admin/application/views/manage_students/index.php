@@ -35,6 +35,8 @@
                     <th style="min-width: 100px;">Image</th>
                     <th style="min-width: 75px;">Class</th>
                     <th style="min-width: 75px;">Section</th>
+                    <th style="min-width: 75px;">Admission Fee</th>
+                    <th style="min-width: 75px;">Tuition Fee</th>
                     <th style="min-width: 150px;">Action</th>
                 </tr>
             </thead>
@@ -52,6 +54,8 @@
                         $studentImage = !empty($row['student_image'])?'<img src="'.base_url().'uploads/students/'.$row['student_image'].'" alt="" width="100" height="75" />':''; 
                         $studentClass = $row['class_name'];
                         $studentSectionName = $row['section_name'];
+                        $studentAdmissionFee = $row['student_admission_fee'];
+                        $studentTuitionFee = $row['student_tuition_fee'];
                        
                 ?>
                         <tr>
@@ -65,6 +69,8 @@
                             <td><?php echo $studentImage ?></td>
                             <td><?php echo $studentClass ?></td>
                             <td><?php echo $studentSectionName ?></td>
+                            <td><?php echo $studentAdmissionFee ?></td>
+                            <td><?php echo $studentTuitionFee ?></td>
                             <td style="display:flex;">
                                 <a href="<?php echo base_url('manage_students/edit/' . $row['student_id']); ?>" class="btn btn-warning" style="margin:2px">Edit</a><br>
                                 <a href="<?php echo base_url('manage_students/delete/' . $row['student_id']); ?>" class="btn btn-danger" style="margin:2px" onclick="return confirm('Are you sure to delete data?')?true:false;">Delete</a><br>

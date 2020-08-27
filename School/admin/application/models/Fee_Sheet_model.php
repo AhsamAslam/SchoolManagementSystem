@@ -8,12 +8,14 @@ class Fee_Sheet_model extends CI_Model
         $this->table = 'fee_sheets';
     }
 
-    public function insert($data = array())
+    public function insert($data = array(),$date)
     {
         if (!empty($data)) {
             // Insert member data 
+        //   echo "<pre>"; print_r($studentsData); exit();
+            foreach ($data as $data){
             $insert = $this->db->insert($this->table, $data);
-
+            }
             // Return the status 
             return $insert ? $this->db->insert_id() : false;
         }

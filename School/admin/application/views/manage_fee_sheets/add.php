@@ -14,7 +14,7 @@
             <form method="post" action="" enctype="multipart/form-data">
                 <div class="form-group">
                     <label>Student:</label>
-                    <select class="browser-default custom-select" name="fee_student" required disabled>
+                    <select class="browser-default custom-select" name="fee_student" required>
                         <option selected disabled value>Select Student</option>
                         <?php if (!empty($students)) {
                             $i = 0;
@@ -33,17 +33,28 @@
                 </div>
                 <div class="form-group">
                     <label>Class:</label>
-                    <select class="browser-default custom-select" name="fee_student_class" required disabled>
+                    <select class="browser-default custom-select" name="fee_student_class" required>
                         <option selected disabled value>Select Class</option>
-                        <?php if (!empty($students)) {
+                        <?php if (!empty($classes)) {
                             $i = 0;
-                            foreach ($students as $row) {
-                                $i++;
-                                if ($feeSheet['fees_student_class_id'] == $row["student_class_id"]) {  ?>
-                                    <option value="<?php echo $row["student_class_id"]; ?>" selected><?php echo $row["class_name"]; ?></option>
-                                <?php } else { ?>
-                                    <option value="<?php echo $row["student_class_id"]; ?>"><?php echo $row["class_name"]; ?></option>
-                                <?php } ?>
+                            foreach ($classes as $row) {
+                                $i++;  ?>     
+                                    <option value="<?php echo $row["class_id"]; ?>"><?php echo $row["class_name"]; ?></option>                   
+                            <?php } ?>
+                        <?php } ?>
+
+                    </select>
+                    <?php echo form_error('fee_student_class', '<p class="help-block text-danger">', '</p>'); ?>
+                </div>
+                <div class="form-group">
+                    <label>Class:</label>
+                    <select class="browser-default custom-select" name="fee_student_class_section" required>
+                        <option selected disabled value>Select Section</option>
+                        <?php if (!empty($sections)) {
+                            $i = 0;
+                            foreach ($sections as $row) {
+                                $i++;?>
+                                    <option value="<?php echo $row["section_id"]; ?>"><?php echo $row["section_name"]; ?></option>
                             <?php } ?>
                         <?php } ?>
 
@@ -55,10 +66,10 @@
                     <input type="date" class="browser-default custom-select" name="fee_submit_date" value="<?php echo date('Y-m-d'); ?>" required></input>
                     <?php echo form_error('fee_month', '<p class="help-block text-danger">', '</p>'); ?>
                 </div>
-                <div class="form-group custom-control custom-checkbox">
+                <!-- <div class="form-group custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="feeCheck" required>
                     <label class="custom-control-label" for="customCheck">Fees Collected</label>
-                </div>
+                </div> -->
                 <!-- <div class="form-group">
                     <label>Description:</label>
                     <input type="text" name="description" class="form-control" placeholder="Enter section description" value="<?php echo !empty($feeSheet['fees_description']) ? $feeSheet['fees_description'] : ''; ?>" required>

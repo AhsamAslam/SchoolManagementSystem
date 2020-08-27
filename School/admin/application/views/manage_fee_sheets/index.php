@@ -39,18 +39,22 @@
                     $i = 0;
                     foreach ($fee_sheets as $row) {
                         $i++;
-                        $feeSheetStudent = $row['fees_student_id'];
-                        // $feeSheetMonth = $row['fees_month'];
-                        // $feeSheetYear = $row['fees_year'];
-                        $feeSheetSumittedDate = $row['fees_submitted_date'];
+                        foreach ($students as $student) {
+                        if($row['fees_student_id'] == $student['student_id']){
+                            $feeSheetStudent = $student['student_name'];
+                            $feeStudentClass = $student['class_name'];
+                            }
+                        }
+                        $feeSheetSubmittedDate = $row['fees_submitted_date'];
+                        $feeIsSubmitted = $row['fees_is_submitted'];
                        
                 ?>
                         <tr>
                             <td><?php echo $i; ?></td>
                             <td><?php echo $feeSheetStudent; ?></td>
-                            <!-- <td><?php echo $feeSheetMonth; ?></td> -->
-                            <!-- <td><?php echo $feeSheetYear; ?></td> -->
-                            <td><?php echo $feeSheetSumittedDate; ?></td>
+                            <td><?php echo $feeStudentClass; ?></td>
+                            <td><?php echo $feeSheetSubmittedDate; ?></td>
+                            <td><span class="badge <?php echo ($feeIsSubmitted == 1)?'badge-success':'badge-danger'; ?>"><?php echo ($feeIsSubmitted == 1)?'Submitted':'Not-Submitted'; ?></span></a></td>
                             <td style="display:flex;">
                                 <a href="<?php echo base_url('manage_fee_sheets/edit/' . $row['fees_id']); ?>" class="btn btn-warning" style="margin:2px">Edit</a><br>
                                 <a href="<?php echo base_url('manage_fee_sheets/delete/' . $row['fees_id']); ?>" class="btn btn-danger" style="margin:2px" onclick="return confirm('Are you sure to delete data?')?true:false;">Delete</a><br>

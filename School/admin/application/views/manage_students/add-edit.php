@@ -90,6 +90,16 @@
                     </select>
                     <?php echo form_error('student_section_id', '<p class="help-block text-danger">', '</p>'); ?>
                 </div>
+                <div class="form-group">
+                    <label>Admission Fee:</label>
+                    <input type="number" name="admission_fee" class="form-control" placeholder="Enter admission fees" value="<?php echo !empty($student['student_admission_fee']) ? $student['student_admission_fee'] : ''; ?>" required>
+                    <?php echo form_error('student_admission_fee', '<p class="help-block text-danger">', '</p>'); ?>
+                </div>
+                <div class="form-group">
+                    <label>Tuition Fee:</label>
+                    <input type="number" name="tuition_fee" class="form-control" placeholder="Enter tuition fees" value="<?php echo !empty($student['student_tuition_fee']) ? $student['student_tuition_fee'] : ''; ?>" required>
+                    <?php echo form_error('student_tuition_fee', '<p class="help-block text-danger">', '</p>'); ?>
+                </div>
                 <!-- </div> -->
 
                 <a href="<?php echo base_url('manage_students'); ?>" class="btn btn-secondary">Back</a>
