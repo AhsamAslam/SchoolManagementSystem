@@ -12,6 +12,11 @@
     <div class="row">
         <div class="col-md-6">
             <form method="post" action="" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Teacher Identification:</label>
+                <input type="text" name="teacherId" class="form-control" placeholder="Enter teacher Id" value="<?php echo !empty($teacher['teacher_identification']) ? $teacher['teacher_identification'] : ''; ?>" >
+                <?php echo form_error('check_teacherIdentification', '<p class="help-block text-danger">', '</p>'); ?>
+            </div>
                 <div class="form-group">
                     <label>Name:</label>
                     <input type="text" name="name" class="form-control" placeholder="Enter teacher name" value="<?php echo !empty($teacher['teacher_name'])?$teacher['teacher_name']:''; ?>" required >
@@ -31,6 +36,11 @@
                     <label>Address:</label>
                     <input type="text" name="address" class="form-control" placeholder="Enter teacher address" value="<?php echo !empty($teacher['teacher_address'])?$teacher['teacher_address']:''; ?>" required>
                     <?php echo form_error('teacher_address','<p class="help-block text-danger">','</p>'); ?>
+                </div>
+                <div class="form-group">
+                    <label>Salary:</label>
+                    <input type="number" name="salary" class="form-control" placeholder="Enter teacher salary" value="<?php echo !empty($teacher['teacher_salary'])?$teacher['teacher_salary']:''; ?>" required>
+                    <?php echo form_error('teacher_salary','<p class="help-block text-danger">','</p>'); ?>
                 </div>
                 <div class="form-group">
                     <label>Teacher CNIC:</label>

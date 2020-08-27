@@ -26,6 +26,7 @@
             <thead class="thead-dark">
                 <tr>
                     <th>#</th>
+                    <th style="min-width: 150px;">ID</th>
                     <th style="min-width: 150px;">Name</th>
                     <th style="min-width: 100px;">Contact</th>
                     <th style="min-width: 150px;">Email</th>
@@ -45,6 +46,7 @@
                     $i = 0;
                     foreach ($students as $row) {
                         $i++;
+                        $studentId = $row['student_identification'];
                         $studentName = $row['student_name'];
                         $studentContact = $row['student_contact'];
                         $studentEmail = $row['student_email'];
@@ -60,6 +62,7 @@
                 ?>
                         <tr>
                             <td><?php echo $i; ?></td>
+                            <td><?php echo $studentId; ?></td>
                             <td><?php echo $studentName; ?></td>
                             <td><?php echo $studentContact; ?></td>
                             <td><?php echo $studentEmail ?></td>

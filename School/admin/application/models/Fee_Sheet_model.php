@@ -8,19 +8,34 @@ class Fee_Sheet_model extends CI_Model
         $this->table = 'fee_sheets';
     }
 
-    public function insert($data = array(),$date)
+    public function insert($data = array())
+    {
+        if (!empty($data)) {
+            // Insert member data 
+        //   echo "<pre>"; print_r($studentsData); exit();
+            // foreach ($data as $data){
+            $insert = $this->db->insert($this->table, $data);
+            // } 
+            // Return the status 
+            return $insert ? $this->db->insert_id() : false;
+        }
+        return false;
+    }
+
+    public function insertArray($data = array())
     {
         if (!empty($data)) {
             // Insert member data 
         //   echo "<pre>"; print_r($studentsData); exit();
             foreach ($data as $data){
             $insert = $this->db->insert($this->table, $data);
-            }
+            } 
             // Return the status 
             return $insert ? $this->db->insert_id() : false;
         }
         return false;
     }
+
     public function getRows($params = array())
     {
         $this->db->select('*');
@@ -89,5 +104,18 @@ class Fee_Sheet_model extends CI_Model
             return $row;
         }
         return false;
+    }
+
+    public function getAllStudents()
+    {
+        $this->db->select('*');
+        $this->db->from('fee_sheets fs');
+        $this->db->join('students st', 'fs.fees_student_id = st.student_id', 'left');
+        $this->db->join('sections s', 'fs.fees_student_class_section_id = s.section_id', 'left');
+        $this->db->join('classes c', 'fs.fees_student_class_id = c.class_id', 'left');
+        $this->db->where('fs.fees_is_active', '1');
+        $query = $this->db->get();
+        $result = ($query->num_rows() > 0) ? $query->result_array() : FALSE;
+        return $result;
     }
 }

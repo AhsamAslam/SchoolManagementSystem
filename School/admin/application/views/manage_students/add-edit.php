@@ -12,6 +12,11 @@
     <div class="row">
         <div class="col-md-6">
             <form method="post" action="" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Student Identification:</label>
+                <input type="text" name="studentId" class="form-control" placeholder="Enter student Id" value="<?php echo !empty($student['student_identification']) ? $student['student_identification'] : ''; ?>" >
+                <?php echo form_error('studentId', '<p class="help-block text-danger">', '</p>'); ?>
+            </div>
                 <div class="form-group">
                     <label>Name:</label>
                     <input type="text" name="name" class="form-control" placeholder="Enter student name" value="<?php echo !empty($student['student_name']) ? $student['student_name'] : ''; ?>" required>

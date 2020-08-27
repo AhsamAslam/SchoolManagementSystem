@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 26, 2020 at 01:56 PM
+-- Generation Time: Aug 27, 2020 at 08:02 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.2.32
 
@@ -79,20 +79,38 @@ INSERT INTO `courses` (`course_id`, `course_name`, `course_level`, `course_publi
 
 CREATE TABLE `fee_sheets` (
   `fees_id` int(11) NOT NULL,
-  `fees_submitted_date` date NOT NULL,
   `fees_student_id` int(11) NOT NULL,
-  `fees_is_submitted` bit(1) NOT NULL,
+  `fees_student_class_id` int(11) NOT NULL,
+  `fees_student_class_section_id` int(11) NOT NULL,
+  `fees_submitted_amount` float NOT NULL,
+  `fees_submitted_date` date DEFAULT NULL,
   `fees_is_active` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1=Active, 0=Inactive',
-  `created` datetime NOT NULL DEFAULT current_timestamp(),
-  `fees_student_class_id` int(11) NOT NULL
+  `fees_is_submitted` tinyint(1) NOT NULL,
+  `created` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `fee_sheets`
 --
 
-INSERT INTO `fee_sheets` (`fees_id`, `fees_submitted_date`, `fees_student_id`, `fees_is_submitted`, `fees_is_active`, `created`, `fees_student_class_id`) VALUES
-(1, '2020-08-22', 18, b'1', 1, '2020-08-22 18:25:44', 0);
+INSERT INTO `fee_sheets` (`fees_id`, `fees_student_id`, `fees_student_class_id`, `fees_student_class_section_id`, `fees_submitted_amount`, `fees_submitted_date`, `fees_is_active`, `fees_is_submitted`, `created`) VALUES
+(71, 17, 8, 13, 3000, '2020-08-27', 1, 1, '2020-08-27 17:55:27'),
+(72, 18, 7, 14, 2800, '2020-08-27', 1, 1, '2020-08-27 17:55:27'),
+(73, 19, 5, 14, 3200, NULL, 0, 0, '2020-08-27 17:55:27'),
+(74, 20, 8, 14, 3500, NULL, 0, 0, '2020-08-27 17:55:27'),
+(75, 18, 6, 15, 500, '2020-08-27', 1, 1, '2020-08-27 17:55:53'),
+(76, 17, 8, 13, 3000, NULL, 0, 0, '2020-08-27 18:12:44'),
+(77, 18, 7, 14, 2800, NULL, 0, 0, '2020-08-27 18:12:44'),
+(78, 19, 5, 14, 3200, NULL, 0, 0, '2020-08-27 18:12:44'),
+(79, 20, 8, 14, 3500, NULL, 1, 0, '2020-08-27 18:12:44'),
+(80, 17, 8, 13, 3000, NULL, 0, 0, '2020-08-27 18:14:37'),
+(81, 18, 7, 14, 2800, NULL, 0, 0, '2020-08-27 18:14:37'),
+(82, 19, 5, 14, 3200, NULL, 0, 0, '2020-08-27 18:14:37'),
+(83, 20, 8, 14, 3500, NULL, 0, 0, '2020-08-27 18:14:37'),
+(84, 17, 8, 13, 3000, NULL, 0, 0, '2020-08-27 18:25:46'),
+(85, 18, 7, 14, 2800, NULL, 0, 0, '2020-08-27 18:25:46'),
+(86, 19, 5, 14, 3200, NULL, 0, 0, '2020-08-27 18:25:46'),
+(87, 20, 8, 14, 3500, NULL, 0, 0, '2020-08-27 18:25:46');
 
 -- --------------------------------------------------------
 
@@ -128,6 +146,7 @@ INSERT INTO `sections` (`section_id`, `section_name`, `section_description`, `se
 
 CREATE TABLE `students` (
   `student_id` int(11) NOT NULL,
+  `student_identification` varchar(50) NOT NULL,
   `student_name` varchar(50) NOT NULL,
   `student_contact` varchar(50) NOT NULL,
   `student_email` varchar(100) NOT NULL,
@@ -137,6 +156,8 @@ CREATE TABLE `students` (
   `student_image` text NOT NULL,
   `student_class_id` int(11) NOT NULL,
   `student_section_id` int(11) NOT NULL,
+  `student_admission_fee` float NOT NULL,
+  `student_tuition_fee` float NOT NULL,
   `student_is_active` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1=Active, 0=Inactive',
   `created` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -145,10 +166,13 @@ CREATE TABLE `students` (
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`student_id`, `student_name`, `student_contact`, `student_email`, `student_address`, `student_father_name`, `student_father_cnic`, `student_image`, `student_class_id`, `student_section_id`, `student_is_active`, `created`) VALUES
-(17, 'test', '0300-0000000', 'admin@admin', '2132 H block', 'father name ', '00000-0000000-0', 'Home-Tilerbytrade18.jpg', 7, 13, 1, '2020-08-21 22:51:44'),
-(18, 'Hello', '0300-0000000', 'tevaneg486@ioxmail.net', 'H # test, Block Test, Updated.', 'Father Of Updated', '00000-0000000-0', 'Capture_d%u2019écran_2020-06-21_à_07_20_59_(2)9.png', 7, 14, 1, '2020-08-21 22:52:35'),
-(19, 'Hello', '0300-0000000', 'test@test', '2132 H block', 'father name ', '00000-0000000-0', 'Capture_d%u2019écran_2020-06-21_à_07_20_59_(2)12.png', 5, 14, 1, '2020-08-21 22:53:04');
+INSERT INTO `students` (`student_id`, `student_identification`, `student_name`, `student_contact`, `student_email`, `student_address`, `student_father_name`, `student_father_cnic`, `student_image`, `student_class_id`, `student_section_id`, `student_admission_fee`, `student_tuition_fee`, `student_is_active`, `created`) VALUES
+(17, '25', 'test', '0300-0000000', 'admin@admin', '2132 H block', 'father name ', '00000-0000000-0', 'Blue_Simple_Class_Schedule.jpg', 8, 13, 12000, 3000, 1, '2020-08-21 22:51:44'),
+(18, '32', 'World', '0300-0000000', 'tevaneg486@ioxmail.net', 'H # test, Block Test, Updated.', 'Father Of Updated', '00000-0000000-0', 'gaming-wallpapers-93.jpg', 7, 14, 14000, 2800, 1, '2020-08-21 22:52:35'),
+(19, '27', 'Hello', '0300-0000000', 'test@test', '2132 H block', 'father name ', '00000-0000000-0', 'gaming-wallpapers-94.jpg', 5, 14, 11000, 3200, 1, '2020-08-21 22:53:04'),
+(20, '28', 'Ali', '0300-4521245', 'ali@yahoo.com', 'H # 123, Shalimar Road, Lahore', 'Father name', '35125-5054605-6', 'gaming-wallpapers-92.jpg', 8, 14, 15000, 3500, 1, '2020-08-26 23:01:57'),
+(21, '29', 'Hassan', '0300-0000000', 'hassan@hassan.com', 'H#1, St#2, Block A, City.', 'Father', '00000-0000000-0', 'Blue_Simple_Class_Schedule1.png', 7, 17, 5500, 1800, 1, '2020-08-27 19:46:37'),
+(22, '30', 'asd', '0300-0000000', 'admin@admin', '0000', '000', '00000-0000000-0', 'Blue_Simple_Class_Schedule3.png', 7, 15, 500, 5500, 1, '2020-08-27 19:52:22');
 
 -- --------------------------------------------------------
 
@@ -158,10 +182,12 @@ INSERT INTO `students` (`student_id`, `student_name`, `student_contact`, `studen
 
 CREATE TABLE `teachers` (
   `teacher_id` int(11) NOT NULL,
+  `teacher_identification` varchar(50) NOT NULL,
   `teacher_name` varchar(50) NOT NULL,
   `teacher_cnic` varchar(50) NOT NULL,
   `teacher_email` varchar(100) NOT NULL,
   `teacher_contact` varchar(50) NOT NULL,
+  `teacher_salary` float NOT NULL,
   `teacher_address` varchar(255) NOT NULL,
   `teacher_image` text NOT NULL,
   `teacher_is_active` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1=Active, 0=Inactive',
@@ -172,9 +198,11 @@ CREATE TABLE `teachers` (
 -- Dumping data for table `teachers`
 --
 
-INSERT INTO `teachers` (`teacher_id`, `teacher_name`, `teacher_cnic`, `teacher_email`, `teacher_contact`, `teacher_address`, `teacher_image`, `teacher_is_active`, `created`) VALUES
-(2, 'Hello', '35468-9465465-4', 'tevaneg486@ioxmail.net', '0351-4564456', '132 X B Cantt', 'img_0669.jpg', 1, '2020-08-19 00:00:00'),
-(3, 'test', '53545-5466457-7', 'ar@bhatti.com', '0351-3245646', '4326466 AADS QWED ', 'download.png', 1, '2020-08-19 00:00:00');
+INSERT INTO `teachers` (`teacher_id`, `teacher_identification`, `teacher_name`, `teacher_cnic`, `teacher_email`, `teacher_contact`, `teacher_salary`, `teacher_address`, `teacher_image`, `teacher_is_active`, `created`) VALUES
+(2, '25', 'Hello', '35468-9465465-4', 'tevaneg486@ioxmail.net', '0351-4564456', 0, '132 X B Cantt', 'Blue_Simple_Class_Schedule.png', 1, '2020-08-19 00:00:00'),
+(3, '27', 'test', '53545-5466457-7', 'ar@bhatti.com', '0351-3245646', 0, '4326466 AADS QWED ', 'download.png', 1, '2020-08-19 00:00:00'),
+(4, '26', 'asd', '00000-0000000-0', 'admin@admin', '0300-0000000', 0, '0000', 'Blue_Simple_Class_Schedule1.png', 1, '2020-08-27 21:23:27'),
+(5, '28', 'Test', '00000-0000000-0', 'test@test', '0300-0000000', 80000, 'TEST', 'Blue_Simple_Class_Schedule2.png', 1, '2020-08-27 21:49:10');
 
 --
 -- Indexes for dumped tables
@@ -208,13 +236,15 @@ ALTER TABLE `sections`
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
-  ADD PRIMARY KEY (`student_id`);
+  ADD PRIMARY KEY (`student_id`),
+  ADD UNIQUE KEY `student_identification` (`student_identification`);
 
 --
 -- Indexes for table `teachers`
 --
 ALTER TABLE `teachers`
-  ADD PRIMARY KEY (`teacher_id`);
+  ADD PRIMARY KEY (`teacher_id`),
+  ADD UNIQUE KEY `teacher_identification` (`teacher_identification`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -236,7 +266,7 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `fee_sheets`
 --
 ALTER TABLE `fee_sheets`
-  MODIFY `fees_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `fees_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `sections`
@@ -248,13 +278,13 @@ ALTER TABLE `sections`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

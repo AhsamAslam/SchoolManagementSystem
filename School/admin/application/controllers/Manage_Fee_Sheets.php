@@ -24,17 +24,19 @@ class Manage_Fee_Sheets extends CI_Controller
     public function index()
     {
         // Get messages from the session 
-        if($this->session->userdata('success_msg')){ 
-            $data['success_msg'] = $this->session->userdata('success_msg'); 
-            $this->session->unset_userdata('success_msg'); 
-        } 
-        if($this->session->userdata('error_msg')){ 
-            $data['error_msg'] = $this->session->userdata('error_msg'); 
-            $this->session->unset_userdata('error_msg'); 
-        } 
+        if ($this->session->userdata('success_msg')) {
+            $data['success_msg'] = $this->session->userdata('success_msg');
+            $this->session->unset_userdata('success_msg');
+        }
+        if ($this->session->userdata('error_msg')) {
+            $data['error_msg'] = $this->session->userdata('error_msg');
+            $this->session->unset_userdata('error_msg');
+        }
 
         $data['students'] = $this->Student_model->getSectionNames();
-        $data['fee_sheets'] = $this->Fee_Sheet_model->getRows();
+        $data['fee_sheets'] = $this->Fee_Sheet_model->getAllStudents();
+        // echo "<pre>"; print_r($data['students']);
+
         $data['title'] = 'Submit Fee';
 
         $this->load->view('templates/header');
@@ -51,17 +53,21 @@ class Manage_Fee_Sheets extends CI_Controller
         if ($this->input->post('Submit')) {
 
             // Prepare data 
-            $feeSheetData = array( 
-                'fees_name' => $this->input->post('name'),
-                'fees_description' => $this->input->post('description')
-            ); 
-            
+            $feeSheetData = array(
+                'fees_student_id' => $this->input->post('fee_student'),
+                'fees_student_class_id' => $this->input->post('fee_student_class'),
+                'fees_student_class_section_id' => $this->input->post('fee_student_class_section'),
+                'fees_submitted_amount' => $this->input->post('fee_amount'),
+                'fees_submitted_date' => $this->input->post('fee_submit_date'),
+                'fees_is_submitted' => $this->input->post('feeCheck')
+            );
+
             if (empty($error)) {
                 // Insert data 
                 $insert = $this->Fee_Sheet_model->insert($feeSheetData);
 
                 if ($insert) {
-                    $this->session->set_userdata('success_msg', 'Fee_Sheet has been added successfully.');
+                    $this->session->set_userdata('success_msg', 'Fee has been added successfully.');
                     redirect($this->controller);
                 } else {
                     $error = 'Some problems occurred, please try again.';
@@ -75,7 +81,7 @@ class Manage_Fee_Sheets extends CI_Controller
         $data['students'] = $this->Student_model->getRows();
         $data['classes'] = $this->Class_model->getRows();
         $data['sections'] = $this->Section_model->getRows();
-        $data['feeSheet'] = $this->Fee_Sheet_model->getRows(); 
+        $data['feeSheet'] = $this->Fee_Sheet_model->getRows();
         // echo "<pre>"; print_r($data); exit();
         $data['title'] = 'Submit Fee';
         $data['action'] = 'Upload';
@@ -86,105 +92,107 @@ class Manage_Fee_Sheets extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function edit($id){ 
-        $data = $feeSheetData = array(); 
-         
+    public function edit($id)
+    {
+        $data = $feeSheetData = array();
+
         // Get image data 
-        $con = array('id' => $id); 
-        $feeSheetData = $this->Fee_Sheet_model->getRows($con); 
-         
+        $con = array('id' => $id);
+        $feeSheetData = $this->Fee_Sheet_model->getRows($con);
+
         // If update request is submitted 
-        if($this->input->post('Submit')){ 
+        if ($this->input->post('Submit')) {
             // Form field validation rules 
             // $this->form_validation->set_rules('title', 'gallery title', 'required'); 
-            
+
             // Prepare gallery data 
-            $feeSheetData = array( 
+            $feeSheetData = array(
                 'fees_submitted_date' => $this->input->post('fee_submit_date'),
                 'fees_is_submitted' => $this->input->post('feeCheck')
-            ); 
-            
+            );
+
             // echo "<pre>"; print_r($feeSheetData); exit();
-                if(empty($error)){ 
-                    // Update image data 
-                    $update = $this->Fee_Sheet_model->update($feeSheetData, $id); 
-                     
-                    if($update){ 
-                        $this->session->set_userdata('success_msg', 'Fee_Sheet has been updated successfully.'); 
-                        redirect($this->controller); 
-                    }else{ 
-                        $error = 'Some problems occurred, please try again.'; 
-                    } 
-                } 
-                 
-                $data['error_msg'] = $error; 
+            if (empty($error)) {
+                // Update image data 
+                $update = $this->Fee_Sheet_model->update($feeSheetData, $id);
+
+                if ($update) {
+                    $this->session->set_userdata('success_msg', 'Fee has been updated successfully.');
+                    redirect($this->controller);
+                } else {
+                    $error = 'Some problems occurred, please try again.';
+                }
+            }
+
+            $data['error_msg'] = $error;
             // } 
-        } 
+        }
 
         $data['students'] = $this->Student_model->getSectionNames();
-        $data['feeSheet'] = $feeSheetData; 
-        $data['title'] = 'Update Fee_Sheet'; 
-        $data['action'] = 'Edit'; 
-         
+        $data['feeSheet'] = $feeSheetData;
+        $data['title'] = 'Update Fee_Sheet';
+        $data['action'] = 'Edit';
+
         // Load the edit page view 
-        $this->load->view('templates/header', $data); 
-        $this->load->view($this->controller.'/add-edit', $data); 
-        $this->load->view('templates/footer'); 
+        $this->load->view('templates/header', $data);
+        $this->load->view($this->controller . '/add-edit', $data);
+        $this->load->view('templates/footer');
     }
 
-    public function delete($id){ 
+    public function delete($id)
+    {
         // Check whether id is not empty 
-        if($id){ 
-            $con = array('fees_id' => $id); 
+        if ($id) {
+            $con = array('fees_id' => $id);
             $feeSheetData = $this->Fee_Sheet_model->getRows($con);
-            $feeSheetData = array( 
+            $feeSheetData = array(
                 'fees_is_active' => ('0')
-            ); 
-             
-            // Delete data 
-            $delete = $this->Fee_Sheet_model->update($feeSheetData,$id); 
-             
-            if($delete){ 
-                $this->session->set_userdata('success_msg', 'Fee_Sheet has been removed successfully.'); 
-            }else{ 
-                $this->session->set_userdata('error_msg', 'Some problems occurred, please try again.'); 
-            } 
-        } 
- 
-        redirect($this->controller); 
-    } 
+            );
 
-    public function showStudents(){
-        if($this->session->userdata('success_msg')){ 
-            $data['success_msg'] = $this->session->userdata('success_msg'); 
-            $this->session->unset_userdata('success_msg'); 
-        } 
-        if($this->session->userdata('error_msg')){ 
-            $data['error_msg'] = $this->session->userdata('error_msg'); 
-            $this->session->unset_userdata('error_msg'); 
-        } 
+            // Delete data 
+            $delete = $this->Fee_Sheet_model->update($feeSheetData, $id);
+
+            if ($delete) {
+                $this->session->set_userdata('success_msg', 'Fee has been removed successfully.');
+            } else {
+                $this->session->set_userdata('error_msg', 'Some problems occurred, please try again.');
+            }
+        }
+
+        redirect($this->controller);
+    }
+
+    public function showStudents()
+    {
+        if ($this->session->userdata('success_msg')) {
+            $data['success_msg'] = $this->session->userdata('success_msg');
+            $this->session->unset_userdata('success_msg');
+        }
+        if ($this->session->userdata('error_msg')) {
+            $data['error_msg'] = $this->session->userdata('error_msg');
+            $this->session->unset_userdata('error_msg');
+        }
         $studentsData = array();
         $students = $this->Student_model->getSectionNames();
         foreach ($students as $student) {
-            $studentsData[] = array( 
+            $studentsData[] = array(
                 'fees_student_id' => $student['student_id'],
                 'fees_student_class_id' => $student['student_class_id'],
-                'fees_student_class_id' => $student['student_class_id'],
-                'fees_student_class_id' => $student['student_class_id'],
-                'fees_student_class_id' => $student['student_class_id']
-            ); 
+                'fees_student_class_section_id' => $student['student_section_id'],
+                'fees_submitted_amount' => $student['student_tuition_fee']
+            );
         }
-        
+
         //   echo "<pre>"; print_r($data['studentData']); exit();
-        
+
         if (empty($error)) {
             // Insert data 
             $date = date("Y-m");
             // echo $date; exit();
-            $insert = $this->Fee_Sheet_model->insert($studentsData,$date);
+            $insert = $this->Fee_Sheet_model->insertArray($studentsData);
 
             if ($insert) {
-                $this->session->set_userdata('success_msg', 'Fee_Sheet has been added successfully.');
+                $this->session->set_userdata('success_msg', 'Fee has been added successfully.');
                 redirect($this->controller);
             } else {
                 $error = 'Some problems occurred, please try again.';
