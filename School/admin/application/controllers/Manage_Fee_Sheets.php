@@ -11,6 +11,8 @@ class Manage_Fee_Sheets extends CI_Controller
         // Load product model 
         $this->load->model('Fee_Sheet_model');
         $this->load->model('Student_model');
+        $this->load->model('Class_model');
+        $this->load->model('Section_model');
 
         $this->load->helper('form');
         $this->load->library('form_validation');
@@ -31,6 +33,7 @@ class Manage_Fee_Sheets extends CI_Controller
             $this->session->unset_userdata('error_msg'); 
         } 
 
+        $data['students'] = $this->Student_model->getSectionNames();
         $data['fee_sheets'] = $this->Fee_Sheet_model->getRows();
         $data['title'] = 'Submit Fee';
 
@@ -49,8 +52,8 @@ class Manage_Fee_Sheets extends CI_Controller
 
             // Prepare data 
             $feeSheetData = array( 
-                'fee_name' => $this->input->post('name'),
-                'fee_description' => $this->input->post('description')
+                'fees_name' => $this->input->post('name'),
+                'fees_description' => $this->input->post('description')
             ); 
             
             if (empty($error)) {
@@ -69,15 +72,17 @@ class Manage_Fee_Sheets extends CI_Controller
             // } 
         }
 
-        $data['students'] = $this->Student_model->getSectionNames();
-        $data['feeSheet'] = $feeSheetData; 
+        $data['students'] = $this->Student_model->getRows();
+        $data['classes'] = $this->Class_model->getRows();
+        $data['sections'] = $this->Section_model->getRows();
+        $data['feeSheet'] = $this->Fee_Sheet_model->getRows(); 
         // echo "<pre>"; print_r($data); exit();
         $data['title'] = 'Submit Fee';
         $data['action'] = 'Upload';
 
         // Load the add page view 
         $this->load->view('templates/header', $data);
-        $this->load->view('manage_fee_sheets/add-edit', $data);
+        $this->load->view('manage_fee_sheets/add', $data);
         $this->load->view('templates/footer');
     }
 
@@ -92,13 +97,14 @@ class Manage_Fee_Sheets extends CI_Controller
         if($this->input->post('Submit')){ 
             // Form field validation rules 
             // $this->form_validation->set_rules('title', 'gallery title', 'required'); 
-             
+            
             // Prepare gallery data 
             $feeSheetData = array( 
-                'fee_name' => $this->input->post('name'),
-                'fee_description' => $this->input->post('description')
+                'fees_submitted_date' => $this->input->post('fee_submit_date'),
+                'fees_is_submitted' => $this->input->post('feeCheck')
             ); 
-                 
+            
+            // echo "<pre>"; print_r($feeSheetData); exit();
                 if(empty($error)){ 
                     // Update image data 
                     $update = $this->Fee_Sheet_model->update($feeSheetData, $id); 
@@ -115,6 +121,7 @@ class Manage_Fee_Sheets extends CI_Controller
             // } 
         } 
 
+        $data['students'] = $this->Student_model->getSectionNames();
         $data['feeSheet'] = $feeSheetData; 
         $data['title'] = 'Update Fee_Sheet'; 
         $data['action'] = 'Edit'; 
@@ -128,10 +135,10 @@ class Manage_Fee_Sheets extends CI_Controller
     public function delete($id){ 
         // Check whether id is not empty 
         if($id){ 
-            $con = array('fee_id' => $id); 
+            $con = array('fees_id' => $id); 
             $feeSheetData = $this->Fee_Sheet_model->getRows($con);
             $feeSheetData = array( 
-                'fee_is_active' => ('0')
+                'fees_is_active' => ('0')
             ); 
              
             // Delete data 
@@ -156,20 +163,25 @@ class Manage_Fee_Sheets extends CI_Controller
             $data['error_msg'] = $this->session->userdata('error_msg'); 
             $this->session->unset_userdata('error_msg'); 
         } 
-
-        $students = $this->Student_model->getRows();
+        $studentsData = array();
+        $students = $this->Student_model->getSectionNames();
         foreach ($students as $student) {
-            $studentsData = array( 
-                'fee_student_id' => $student['student_id'],
-                'fee_student_class_id' => $student['student_class_id']
+            $studentsData[] = array( 
+                'fees_student_id' => $student['student_id'],
+                'fees_student_class_id' => $student['student_class_id'],
+                'fees_student_class_id' => $student['student_class_id'],
+                'fees_student_class_id' => $student['student_class_id'],
+                'fees_student_class_id' => $student['student_class_id']
             ); 
-          }
+        }
         
-          echo "<pre>"; print_r($studentsData); exit();
+        //   echo "<pre>"; print_r($data['studentData']); exit();
         
         if (empty($error)) {
             // Insert data 
-            $insert = $this->Fee_Sheet_model->insert($studentsData);
+            $date = date("Y-m");
+            // echo $date; exit();
+            $insert = $this->Fee_Sheet_model->insert($studentsData,$date);
 
             if ($insert) {
                 $this->session->set_userdata('success_msg', 'Fee_Sheet has been added successfully.');
@@ -180,6 +192,7 @@ class Manage_Fee_Sheets extends CI_Controller
         }
 
         $data['error_msg'] = $error;
+        $data['students'] = $students;
 
         $data['fee_sheets'] = $this->Fee_Sheet_model->getRows();
         $data['title'] = 'Submit Fee';

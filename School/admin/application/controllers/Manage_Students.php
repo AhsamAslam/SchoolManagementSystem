@@ -65,7 +65,9 @@ class Manage_Students extends CI_Controller
                 'student_father_name' => $this->input->post('father_name'),
                 'student_father_cnic' => $this->input->post('father_cnic'),
                 'student_class_id' => $this->input->post('student_class'),
-                'student_section_id' => $this->input->post('student_section')
+                'student_section_id' => $this->input->post('student_section'),
+                'student_admission_fee' => $this->input->post('admission_fee'),
+                'student_tuition_fee' => $this->input->post('tuition_fee')
             );
             // File upload configuration 
             $config['upload_path'] = './uploads/students/';
@@ -143,7 +145,9 @@ class Manage_Students extends CI_Controller
                 'student_father_name' => $this->input->post('father_name'),
                 'student_father_cnic' => $this->input->post('father_cnic'),
                 'student_class_id' => $this->input->post('student_class'),
-                'student_section_id' => $this->input->post('student_section')
+                'student_section_id' => $this->input->post('student_section'),
+                'student_admission_fee' => $this->input->post('admission_fee'),
+                'student_tuition_fee' => $this->input->post('tuition_fee')
             );
 
             // Validate submitted form data 
