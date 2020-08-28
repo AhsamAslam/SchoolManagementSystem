@@ -56,7 +56,7 @@ class Manage_Students extends CI_Controller
         // If add request is submitted 
         if ($this->input->post('Submit')) {
 
-            $this->form_validation->set_rules('studentId', 'Student Identification', 'required|is_unique[students.student_identification]|xss_clean');
+            // $this->form_validation->set_rules('studentId', 'Student Identification', 'required|is_unique[students.student_identification]|xss_clean');
 
             // Prepare data 
             $studentData = array(
@@ -73,7 +73,7 @@ class Manage_Students extends CI_Controller
                 'student_tuition_fee' => $this->input->post('tuition_fee')
             );
 
-            if ($this->form_validation->run() == true) {
+            // if ($this->form_validation->run() == true) {
 
                 // File upload configuration 
                 $config['upload_path'] = './uploads/students/';
@@ -109,7 +109,7 @@ class Manage_Students extends CI_Controller
                 }
 
                 $data['error_msg'] = $error;
-            }
+            // }
         }
 
         $data['student'] = $studentData;
@@ -140,7 +140,7 @@ class Manage_Students extends CI_Controller
         // If update request is submitted 
         if ($this->input->post('Submit')) {
             // Form field validation rules 
-            $this->form_validation->set_rules('studentId', 'Student Identification', 'required|is_unique[students.student_identification]|xss_clean');
+            // $this->form_validation->set_rules('studentId', 'Student Identification', 'required|is_unique[students.student_identification]|xss_clean');
             //  if(validation_errors()) echo validation_errors();
             // Prepare gallery data 
             $studentData = array(
@@ -158,7 +158,7 @@ class Manage_Students extends CI_Controller
             );
 
             // Validate submitted form data 
-            if ($this->form_validation->run() == true) {
+            // if ($this->form_validation->run() == true) {
                 //     // Upload image file to the server 
                 //     if(!empty($_FILES['image']['name'])){ 
                 //         $imageName = $_FILES['image']['name']; 
@@ -199,7 +199,7 @@ class Manage_Students extends CI_Controller
             }
 
             $data['error_msg'] = $error;
-            } 
+            // } 
         }
 
         $data['student'] = $studentData;

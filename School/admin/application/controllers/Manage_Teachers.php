@@ -46,7 +46,7 @@ class Manage_Teachers extends CI_Controller
         // If add request is submitted 
         if ($this->input->post('Submit')) {
             // Form field validation ruless
-            $this->form_validation->set_rules('teacherId', 'Teacher Identification', 'required|is_unique[teachers.teacher_identification]|xss_clean');
+            // $this->form_validation->set_rules('teacherId', 'Teacher Identification', 'required|is_unique[teachers.teacher_identification]|xss_clean');
             // $this->form_validation->set_rules('name', 'teacher name', 'required'); 
             // $this->form_validation->set_rules('teacher_contact', 'teacher contact', 'required'); 
             // $this->form_validation->set_rules('teacher_email', 'teacher email', 'required'); 
@@ -66,7 +66,7 @@ class Manage_Teachers extends CI_Controller
             );
 
             // Validate submitted form data 
-            if ($this->form_validation->run() == true) {
+            // if ($this->form_validation->run() == true) {
 
                 // File upload configuration 
                 $config['upload_path'] = './uploads/teachers/';
@@ -102,7 +102,7 @@ class Manage_Teachers extends CI_Controller
                 }
 
                 $data['error_msg'] = $error;
-            }
+            // }
         }
 
         $data['teacher'] = $teacherData;
@@ -128,7 +128,7 @@ class Manage_Teachers extends CI_Controller
         if ($this->input->post('Submit')) {
             // Form field validation rules 
             
-            $this->form_validation->set_rules('teacherIdentification', 'Teacher Identification', 'required|callback_check_teacher_identification');
+            // $this->form_validation->set_rules('teacherIdentification', 'Teacher Identification', 'required|callback_check_teacher_identification');
             // echo "<pre>"; print_r($_POST); exit();
             
             // Prepare gallery data 
@@ -144,7 +144,7 @@ class Manage_Teachers extends CI_Controller
             
             // echo "teacherIdentification"; exit();    
             // Validate submitted form data 
-            if ($this->form_validation->run() == true) {
+            // if ($this->form_validation->run() == true) {
                 //     // Upload image file to the server 
                 //     if(!empty($_FILES['image']['name'])){ 
                 //         $imageName = $_FILES['image']['name']; 
@@ -168,7 +168,7 @@ class Manage_Teachers extends CI_Controller
                     //     @unlink($this->uploadPath . $prevImage);
                     // }
                 } else {
-                    $error = $this->upload->display_errors();
+                    // $error = $this->upload->display_errors();
                 }
                 // } 
 
@@ -185,7 +185,7 @@ class Manage_Teachers extends CI_Controller
                 }
 
                 $data['error_msg'] = $error;
-            }
+            // }
         }
 
         $data['teacher'] = $teacherData;
@@ -226,22 +226,22 @@ class Manage_Teachers extends CI_Controller
         redirect($this->controller);
     }
 
-    function check_teacher_identification() {    
-        $teacherIdentification = $this->input->post('teacherId');
-        if($this->input->post('id'))
-        $id = $this->input->post('id');
-        else
-        $id = '';
-        // echo $id;    
-        // echo $teacherIdentification; exit();    
-        $result = $this->teacher_model->check_unique_teacherIdentification($id, $teacherIdentification);
-        // echo $result; exit();
-        if($result == 0)
-            $response = true;
-        else {
-            $this->form_validation->set_message('check_teacherIdentification', 'Teacher ID must be unique');
-            $response = false;
-        }
-        return $response;
-    }
+    // function check_teacher_identification() {    
+    //     $teacherIdentification = $this->input->post('teacherId');
+    //     if($this->input->post('id'))
+    //     $id = $this->input->post('id');
+    //     else
+    //     $id = '';
+    //     // echo $id;    
+    //     // echo $teacherIdentification; exit();    
+    //     $result = $this->teacher_model->check_unique_teacherIdentification($id, $teacherIdentification);
+    //     // echo $result; exit();
+    //     if($result == 0)
+    //         $response = true;
+    //     else {
+    //         $this->form_validation->set_message('check_teacherIdentification', 'Teacher ID must be unique');
+    //         $response = false;
+    //     }
+    //     return $response;
+    // }
 }

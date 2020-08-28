@@ -68,14 +68,4 @@ class Teacher_model extends CI_Model{
         // Return the status 
         return $delete?true:false; 
     } 
-
-    function check_unique_teacherIdentification($id = '', $teacherIdentification) {
-        // echo $teacherIdentification; exit();
-
-        $this->db->where('teacher_identification', $teacherIdentification);
-        if($id) {
-            $this->db->where_not_in('teacher_id', $id);
-        }
-        return $this->db->get('teachers')->num_rows();
-    }
 }
