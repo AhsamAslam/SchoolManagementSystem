@@ -94,10 +94,12 @@ class Fee_Sheet_model extends CI_Model
 
     public function getFeeSheetName($id)
     {
-        $this->db->select('*');
-        $this->db->from($this->table);
-        $this->db->where('fees_id', $id);
-        $query = $this->db->get();
+        $query = $this
+                ->db
+                ->select('*')
+                ->from($this->table)
+                ->where('fees_id', $id)
+                ->get();
 
         if ($query->num_rows() > 0) {
             $row = $query->row_array();
@@ -108,13 +110,27 @@ class Fee_Sheet_model extends CI_Model
 
     public function getAllStudents()
     {
-        $this->db->select('*');
-        $this->db->from('fee_sheets fs');
-        $this->db->join('students st', 'fs.fees_student_id = st.student_id', 'left');
-        $this->db->join('sections s', 'fs.fees_student_class_section_id = s.section_id', 'left');
-        $this->db->join('classes c', 'fs.fees_student_class_id = c.class_id', 'left');
-        $this->db->where('fs.fees_is_active', '1');
-        $query = $this->db->get();
+        $query = $this
+                ->db->select('fs.*,st.student_name,c.class_name,s.section_name')
+                ->from('fee_sheets fs')
+                ->join('students st', 'fs.fees_student_id = st.student_id', 'left')
+                ->join('sections s', 'fs.fees_student_class_section_id = s.section_id', 'left')
+                ->join('classes c', 'fs.fees_student_class_id = c.class_id', 'left')
+                ->where('fs.fees_is_active', '1')
+                ->get();
+        $result = ($query->num_rows() > 0) ? $query->result_array() : FALSE;
+        return $result;
+    }
+    public function getStudentsForFee()
+    {
+        $array = array('Month(fs.created) !=' => 'Month(NOW()', 'Year(fs.created) !=' => 'Year(NOW())', 'st.student_is_active' => '1');
+        $query = $this->db->select('fs.*')
+                ->from('fee_sheets fs')
+                ->join('students st' ,'fs.fees_student_id = st.student_id')
+                ->join('sections s', 'fs.fees_student_class_section_id = s.section_id')
+                ->join('classes c', 'fs.fees_student_class_id = c.class_id')
+                ->where($array)
+                ->get();
         $result = ($query->num_rows() > 0) ? $query->result_array() : FALSE;
         return $result;
     }

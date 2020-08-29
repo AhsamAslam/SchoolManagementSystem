@@ -1,3 +1,6 @@
+<script>
+var studentsJSArray =  <?php echo json_encode($students); ?>;
+</script>
 <div class="container">
     <h1><?php echo $title; ?></h1>
     <hr>
@@ -14,17 +17,11 @@
             <form method="post" action="" enctype="multipart/form-data">
                 <div class="form-group">
                     <label>Student:</label>
-                    <select class="browser-default custom-select" name="fee_student" required>
+                    <select class="browser-default custom-select school_select2" name="fee_student" required onchange='selectedStudentFee(this)'>
                         <option selected disabled value>Select Student</option>
                         <?php if (!empty($students)) {
-                            $i = 0;
-                            foreach ($students as $row) {
-                                $i++;
-                                if ($feeSheet['fees_student_id'] == $row["student_id"]) {  ?>
-                                    <option value="<?php echo $row["student_id"]; ?>" selected><?php echo $row["student_name"]; ?></option>
-                                <?php } else { ?>
-                                    <option value="<?php echo $row["student_id"]; ?>"><?php echo $row["student_name"]; ?></option>
-                                <?php } ?>
+                            foreach ($students as $row) { ?>                             
+                                <option value="<?php echo $row["student_id"]; ?>"><?php echo $row["student_identification"] . " - " . $row["student_name"]; ?></option>
                             <?php } ?>
                         <?php } ?>
 
@@ -62,7 +59,7 @@
                 </div>
                 <div class="form-group">
                     <label>Fee Amount:</label>
-                    <input type="number" class="browser-default custom-select" name="fee_amount" required></input>
+                    <input type="number" class="browser-default custom-select" name="fee_amount" id="add_fee_amount" required></input>
                     <?php echo form_error('fee_month', '<p class="help-block text-danger">', '</p>'); ?>
                 </div>
                 <div class="form-group custom-control custom-checkbox">
@@ -94,3 +91,4 @@
         </div>
     </div>
 </div>
+<script src="<?php echo base_url();?>/assets/sidebar/js/manage_fee_sheets.js"></script>

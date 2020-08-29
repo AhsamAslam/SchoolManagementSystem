@@ -51,13 +51,23 @@
                     <?php echo form_error('fee_student_class', '<p class="help-block text-danger">', '</p>'); ?>
                 </div>
                 <div class="form-group">
+                    <label>Fee Amount:</label>
+                    <input type="number" class="browser-default custom-select" name="fee_amount" id="add_fee_amount" value="<?php echo $feeSheet['fees_submitted_amount'] ?>" required></input>
+                    <?php echo form_error('fee_month', '<p class="help-block text-danger">', '</p>'); ?>
+                </div>
+                
+                <div class="form-group custom-control custom-checkbox">
+                    <?php if ($feeSheet['fees_is_submitted'] == true) {  ?>
+                    <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="feeCheck" checked  required>
+                    <?php } else { ?>
+                        <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="feeCheck"  required>                    
+                    <?php } ?>
+                    <label class="custom-control-label" for="customCheck">Fees Collected</label>
+                </div>
+                <div class="form-group">
                     <label>Submit Date:</label>
                     <input type="date" class="browser-default custom-select" name="fee_submit_date" value="<?php echo date('Y-m-d'); ?>" required></input>
                     <?php echo form_error('fee_month', '<p class="help-block text-danger">', '</p>'); ?>
-                </div>
-                <div class="form-group custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="feeCheck" required>
-                    <label class="custom-control-label" for="customCheck">Fees Collected</label>
                 </div>
                 <!-- <div class="form-group">
                     <label>Description:</label>
