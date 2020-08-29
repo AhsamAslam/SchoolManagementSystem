@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 28, 2020 at 08:03 PM
+-- Generation Time: Aug 29, 2020 at 06:43 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.2.32
 
@@ -140,7 +140,15 @@ CREATE TABLE `results` (
 --
 
 INSERT INTO `results` (`result_id`, `result_student_id`, `result_student_class_section_id`, `result_total_marks`, `result_obtained_marks`, `result_is_active`, `created`, `result_student_class_id`) VALUES
-(1, 15, 18, 1500, 1200, 1, '2020-08-28 20:55:23', 14);
+(2, 20, 15, 1100, 875.8, 1, '2020-08-29 17:58:53', 6),
+(3, 19, 16, 1100, 625, 1, '2020-08-29 21:21:38', 5),
+(4, 17, 13, 1100, 725, 1, '2020-08-29 21:21:58', 4),
+(5, 21, 15, 1175, 775, 1, '2020-08-29 21:22:24', 5),
+(6, 22, 12, 1100, 489, 1, '2020-08-29 21:23:06', 6),
+(7, 18, 15, 1100, 987, 1, '2020-08-29 21:23:18', 6),
+(8, 19, 14, 1100, 725, 1, '2020-08-29 21:23:53', 4),
+(9, 22, 12, 1100, 777, 1, '2020-08-29 21:24:11', 5),
+(10, 17, 13, 1100, 725, 1, '2020-08-29 21:24:39', 4);
 
 -- --------------------------------------------------------
 
@@ -342,7 +350,7 @@ ALTER TABLE `fee_sheets`
 -- AUTO_INCREMENT for table `results`
 --
 ALTER TABLE `results`
-  MODIFY `result_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `result_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `salaries`

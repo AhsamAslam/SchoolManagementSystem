@@ -182,7 +182,7 @@ class Manage_Students extends CI_Controller
                     //     @unlink($this->uploadPath . $prevImage);
                     // }
                 } else {
-                    $error = $this->upload->display_errors();
+                    // $error = $this->upload->display_errors();
                 }
             
 

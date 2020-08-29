@@ -25,15 +25,8 @@
             </div>
 
             <ul class="list-unstyled components">
-                <p>Dummy Heading</p>
-                <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li><a href="#">Home 1</a></li>
-                        <li><a href="#">Home 2</a></li>
-                        <li><a href="#">Home 3</a></li>
-                    </ul>
-                </li>
+                <!-- <p>Dummy Heading</p> -->
+                
                 <li>
                     <a href="<?php echo base_url('Manage_Teachers'); ?>">Teachers</a>
                    
@@ -55,6 +48,9 @@
                 </li>
                 <li>
                     <a href="<?php echo base_url('Manage_Salaries'); ?>">Salaries</a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url('Manage_Results'); ?>">Results</a>
                 </li>
             </ul>
         </nav>
