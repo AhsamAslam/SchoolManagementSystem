@@ -1,11 +1,11 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Fee_Sheet_model extends CI_Model
+class Salary_model extends CI_Model
 {
 
     function __construct()
     {
-        $this->table = 'fee_sheets';
+        $this->table = 'salaries';
     }
 
     public function insert($data = array())
@@ -40,7 +40,7 @@ class Fee_Sheet_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from($this->table);
-        $this->db->where("fees_is_active","1");
+        $this->db->where("salary_is_active","1");
 
         if (array_key_exists("where", $params)) {
             foreach ($params['where'] as $key => $val) {
@@ -52,7 +52,7 @@ class Fee_Sheet_model extends CI_Model
             $result = $this->db->count_all_results();
         } else {
             if (array_key_exists("id", $params)) {
-                $this->db->where('fees_id', $params['id']);
+                $this->db->where('salary_id', $params['id']);
                 $query = $this->db->get();
                 $result = $query->row_array();
             } else {
@@ -76,7 +76,7 @@ class Fee_Sheet_model extends CI_Model
         if (!empty($data) && !empty($id)) {
 
             // Update member data 
-            $update = $this->db->update($this->table, $data, array('fees_id' => $id));
+            $update = $this->db->update($this->table, $data, array('salary_id' => $id));
 
             // Return the status 
             return $update ? true : false;
@@ -86,17 +86,17 @@ class Fee_Sheet_model extends CI_Model
     public function delete($id)
     {
         // Delete member data 
-        $delete = $this->db->delete($this->table, array('fees_id' => $id));
+        $delete = $this->db->delete($this->table, array('salary_id' => $id));
 
         // Return the status 
         return $delete ? true : false;
     }
 
-    public function getFeeSheetName($id)
+    public function getSalary($id)
     {
         $this->db->select('*');
         $this->db->from($this->table);
-        $this->db->where('fees_id', $id);
+        $this->db->where('salary_id', $id);
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {
@@ -106,14 +106,12 @@ class Fee_Sheet_model extends CI_Model
         return false;
     }
 
-    public function getAllStudents()
+    public function getAllTeachers()
     {
         $this->db->select('*');
-        $this->db->from('fee_sheets fs');
-        $this->db->join('students st', 'fs.fees_student_id = st.student_id', 'left');
-        $this->db->join('sections s', 'fs.fees_student_class_section_id = s.section_id', 'left');
-        $this->db->join('classes c', 'fs.fees_student_class_id = c.class_id', 'left');
-        $this->db->where('fs.fees_is_active', '1');
+        $this->db->from('salaries s');
+        $this->db->join('teachers t', 's.salary_teacher_id = t.teacher_id', 'left');
+        $this->db->where('s.salary_is_active', '1');
         $query = $this->db->get();
         $result = ($query->num_rows() > 0) ? $query->result_array() : FALSE;
         return $result;

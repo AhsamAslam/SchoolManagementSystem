@@ -38,8 +38,8 @@
                         <?php if (!empty($classes)) {
                             $i = 0;
                             foreach ($classes as $row) {
-                                $i++;  ?>     
-                                    <option value="<?php echo $row["class_id"]; ?>"><?php echo $row["class_name"]; ?></option>                   
+                                $i++;  ?>
+                                <option value="<?php echo $row["class_id"]; ?>"><?php echo $row["class_name"]; ?></option>
                             <?php } ?>
                         <?php } ?>
 
@@ -47,19 +47,27 @@
                     <?php echo form_error('fee_student_class', '<p class="help-block text-danger">', '</p>'); ?>
                 </div>
                 <div class="form-group">
-                    <label>Class:</label>
+                    <label>Section:</label>
                     <select class="browser-default custom-select" name="fee_student_class_section" required>
                         <option selected disabled value>Select Section</option>
                         <?php if (!empty($sections)) {
                             $i = 0;
                             foreach ($sections as $row) {
-                                $i++;?>
-                                    <option value="<?php echo $row["section_id"]; ?>"><?php echo $row["section_name"]; ?></option>
+                                $i++; ?>
+                                <option value="<?php echo $row["section_id"]; ?>"><?php echo $row["section_name"]; ?></option>
                             <?php } ?>
                         <?php } ?>
-
                     </select>
                     <?php echo form_error('fee_student_class', '<p class="help-block text-danger">', '</p>'); ?>
+                </div>
+                <div class="form-group">
+                    <label>Fee Amount:</label>
+                    <input type="number" class="browser-default custom-select" name="fee_amount" required></input>
+                    <?php echo form_error('fee_month', '<p class="help-block text-danger">', '</p>'); ?>
+                </div>
+                <div class="form-group custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="feeCheck" required>
+                    <label class="custom-control-label" for="customCheck">Fees Collected</label>
                 </div>
                 <div class="form-group">
                     <label>Submit Date:</label>

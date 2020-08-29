@@ -56,8 +56,11 @@ class Manage_Students extends CI_Controller
         // If add request is submitted 
         if ($this->input->post('Submit')) {
 
+            // $this->form_validation->set_rules('studentId', 'Student Identification', 'required|is_unique[students.student_identification]|xss_clean');
+
             // Prepare data 
             $studentData = array(
+                'student_identification' => $this->input->post('studentId'),
                 'student_name' => $this->input->post('name'),
                 'student_contact' => $this->input->post('contact'),
                 'student_email' => $this->input->post('email'),
@@ -69,41 +72,44 @@ class Manage_Students extends CI_Controller
                 'student_admission_fee' => $this->input->post('admission_fee'),
                 'student_tuition_fee' => $this->input->post('tuition_fee')
             );
-            // File upload configuration 
-            $config['upload_path'] = './uploads/students/';
-            $config['allowed_types'] = 'jpg|jpeg|png|gif';
 
-            // Load and initialize upload library 
-            $this->load->library('upload', $config);
-            $this->upload->initialize($config);
+            // if ($this->form_validation->run() == true) {
 
-            // Upload file to server 
-            if ($this->upload->do_upload('image')) {
-                // Uploaded file data 
-                $fileData = $this->upload->data();
-                $studentData['student_image'] = $fileData['file_name'];
-                // $studentData['file_path'] = basename($fileData['file_path'])."/"; 
-                // $path_name = basename($path_name);
-            } else {
-                $error = $this->upload->display_errors();
-            }
-            //  echo "<pre>"; print_r($_POST); exit();
-            // Validate submitted form data 
-            // if($this->form_validation->run() == true){ 
-            if (empty($error)) {
-                // Insert data 
-                $insert = $this->Student_model->insert($studentData);
+                // File upload configuration 
+                $config['upload_path'] = './uploads/students/';
+                $config['allowed_types'] = 'jpg|jpeg|png|gif';
 
-                if ($insert) {
-                    $this->session->set_userdata('success_msg', 'Student has been added successfully.');
-                    redirect($this->controller);
+                // Load and initialize upload library 
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+
+                // Upload file to server 
+                if ($this->upload->do_upload('image')) {
+                    // Uploaded file data 
+                    $fileData = $this->upload->data();
+                    $studentData['student_image'] = $fileData['file_name'];
+                    // $studentData['file_path'] = basename($fileData['file_path'])."/"; 
+                    // $path_name = basename($path_name);
                 } else {
-                    $error = 'Some problems occurred, please try again.';
+                    $error = $this->upload->display_errors();
                 }
-            }
+                //  echo "<pre>"; print_r($_POST); exit();
+                // Validate submitted form data 
+                // if($this->form_validation->run() == true){ 
+                if (empty($error)) {
+                    // Insert data 
+                    $insert = $this->Student_model->insert($studentData);
 
-            $data['error_msg'] = $error;
-            // } 
+                    if ($insert) {
+                        $this->session->set_userdata('success_msg', 'Student has been added successfully.');
+                        redirect($this->controller);
+                    } else {
+                        $error = 'Some problems occurred, please try again.';
+                    }
+                }
+
+                $data['error_msg'] = $error;
+            // }
         }
 
         $data['student'] = $studentData;
@@ -134,10 +140,11 @@ class Manage_Students extends CI_Controller
         // If update request is submitted 
         if ($this->input->post('Submit')) {
             // Form field validation rules 
-            // $this->form_validation->set_rules('title', 'gallery title', 'required'); 
-
+            // $this->form_validation->set_rules('studentId', 'Student Identification', 'required|is_unique[students.student_identification]|xss_clean');
+            //  if(validation_errors()) echo validation_errors();
             // Prepare gallery data 
             $studentData = array(
+                'student_identification' => $this->input->post('studentId'),
                 'student_name' => $this->input->post('name'),
                 'student_contact' => $this->input->post('contact'),
                 'student_email' => $this->input->post('email'),
@@ -151,33 +158,33 @@ class Manage_Students extends CI_Controller
             );
 
             // Validate submitted form data 
-            // if($this->form_validation->run() == true){ 
-            //     // Upload image file to the server 
-            //     if(!empty($_FILES['image']['name'])){ 
-            //         $imageName = $_FILES['image']['name']; 
+            // if ($this->form_validation->run() == true) {
+                //     // Upload image file to the server 
+                //     if(!empty($_FILES['image']['name'])){ 
+                //         $imageName = $_FILES['image']['name']; 
 
-            // File upload configuration 
-            $config['upload_path'] = './uploads/students/';
-            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                // File upload configuration 
+                $config['upload_path'] = './uploads/students/';
+                $config['allowed_types'] = 'jpg|jpeg|png|gif';
 
-            // Load and initialize upload library 
-            $this->load->library('upload', $config);
-            $this->upload->initialize($config);
+                // Load and initialize upload library 
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
 
-            // Upload file to server 
-            if ($this->upload->do_upload('image')) {
-                // Uploaded file data 
-                $fileData = $this->upload->data();
-                $studentData['student_image'] = $fileData['file_name'];
+                // Upload file to server 
+                if ($this->upload->do_upload('image')) {
+                    // Uploaded file data 
+                    $fileData = $this->upload->data();
+                    $studentData['student_image'] = $fileData['file_name'];
 
-                // Remove old file from the server  
-                if (!empty($prevImage)) {
-                    @unlink($this->uploadPath . $prevImage);
+                    // Remove old file from the server  
+                    // if (!empty($prevImage)) {
+                    //     @unlink($this->uploadPath . $prevImage);
+                    // }
+                } else {
+                    $error = $this->upload->display_errors();
                 }
-            } else {
-                $error = $this->upload->display_errors();
-            }
-            // } 
+            
 
             if (empty($error)) {
                 // Update image data 
@@ -219,7 +226,7 @@ class Manage_Students extends CI_Controller
             );
             // echo "<pre>"; print_r($studentData);exit();
             // Delete data 
-            $delete = $this->Student_model->update($studentData,$id);
+            $delete = $this->Student_model->update($studentData, $id);
 
             if ($delete) {
                 // Remove file from the server  

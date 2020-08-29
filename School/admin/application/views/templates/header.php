@@ -53,6 +53,9 @@
                 <li>
                     <a href="<?php echo base_url('Manage_Fee_Sheets'); ?>">Fee Sheets</a>
                 </li>
+                <li>
+                    <a href="<?php echo base_url('Manage_Salaries'); ?>">Salaries</a>
+                </li>
             </ul>
         </nav>
 

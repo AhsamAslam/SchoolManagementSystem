@@ -25,14 +25,16 @@
         <table id="table_id" class="table table-striped table-bordered" width="100%">
             <thead class="thead-dark">
                 <tr>
-                    <th style="min-width: 50px;">#</th>
+                    <th style="min-width: 30px;">#</th>
+                    <th style="min-width: 50px;">ID</th>
                     <th style="min-width: 200px;">Teacher Name</th>
-                    <th style="min-width: 150px;">Teacher CNIC</th>
-                    <th style="min-width: 150px;">Teacher Email</th>
-                    <th style="min-width: 150px;">Teacher Contact</th>
+                    <th style="min-width: 150px;">CNIC</th>
+                    <th style="min-width: 150px;">Email</th>
+                    <th style="min-width: 150px;">Contact</th>
+                    <th style="min-width: 100px;">Salary</th>
                     <th style="min-width: 100px;">Address</th>
                     <th style="min-width: 100px;">Image</th>
-                    <th style="min-width: 200px;">Action</th>
+                    <th style="min-width: 180px;">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,9 +42,11 @@
                     $i = 0;
                     foreach ($teachers as $row) {
                         $i++;
+                        $teacherId = $row['teacher_identification'];
                         $teacherName = $row['teacher_name'];
                         $teacherContact = $row['teacher_contact'];
                         $teacherEmail = $row['teacher_email'];
+                        $teacherSalary = $row['teacher_salary'];
                         $teacherAddress = $row['teacher_address'];
                         $teacherCnic = $row['teacher_cnic'];
                         $teacherImage = !empty($row['teacher_image'])?'<img src="'.base_url().'uploads/teachers/'.$row['teacher_image'].'" alt="" width="100" height="75" />':''; 
@@ -50,10 +54,12 @@
                 ?>
                         <tr>
                             <td><?php echo $i; ?></td>
+                            <td><?php echo $teacherId; ?></td>
                             <td><?php echo $teacherName; ?></td>
                             <td><?php echo $teacherCnic ?></td>
                             <td><?php echo $teacherEmail ?></td>
                             <td><?php echo $teacherContact; ?></td>
+                            <td><?php echo $teacherSalary ?></td>
                             <td><?php echo $teacherAddress ?></td>
                             <td><?php echo $teacherImage ?></td>
                             <td style="display:flex;">

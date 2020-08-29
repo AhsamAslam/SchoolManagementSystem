@@ -29,6 +29,8 @@
                     <th style="min-width: 50px;">#</th>
                     <th style="min-width: 200px;">Student</th>
                     <th style="min-width: 150px;">Class</th>
+                    <th style="min-width: 150px;">Section</th>
+                    <th style="min-width: 150px;">Fee</th>
                     <th style="min-width: 150px;">Date</th>
                     <th style="min-width: 150px;">Status</th>
                     <th style="min-width: 200px;">Action</th>
@@ -37,24 +39,28 @@
             <tbody>
                 <?php if (!empty($fee_sheets)) {
                     $i = 0;
+                    // echo "<pre>"; print_r($fee_sheets); exit();
                     foreach ($fee_sheets as $row) {
                         $i++;
-                        foreach ($students as $student) {
-                        if($row['fees_student_id'] == $student['student_id']){
-                            $feeSheetStudent = $student['student_name'];
-                            $feeStudentClass = $student['class_name'];
-                            }
-                        }
+
+                        $feeSheetStudent = $row['student_name'];
+                        $feeStudentClass = $row['class_name'];
+                        $feeStudentSection = $row['section_name'];
+
+
+                        $feeSheetSubmittedAmount = $row['fees_submitted_amount'];
                         $feeSheetSubmittedDate = $row['fees_submitted_date'];
                         $feeIsSubmitted = $row['fees_is_submitted'];
-                       
+
                 ?>
                         <tr>
                             <td><?php echo $i; ?></td>
                             <td><?php echo $feeSheetStudent; ?></td>
                             <td><?php echo $feeStudentClass; ?></td>
+                            <td><?php echo $feeStudentSection; ?></td>
+                            <td><?php echo $feeSheetSubmittedAmount; ?></td>
                             <td><?php echo $feeSheetSubmittedDate; ?></td>
-                            <td><span class="badge <?php echo ($feeIsSubmitted == 1)?'badge-success':'badge-danger'; ?>"><?php echo ($feeIsSubmitted == 1)?'Submitted':'Not-Submitted'; ?></span></a></td>
+                            <td><span class="badge <?php echo ($feeIsSubmitted == 1) ? 'badge-success' : 'badge-danger'; ?>"><?php echo ($feeIsSubmitted == 1) ? 'Submitted' : 'Not-Submitted'; ?></span></a></td>
                             <td style="display:flex;">
                                 <a href="<?php echo base_url('manage_fee_sheets/edit/' . $row['fees_id']); ?>" class="btn btn-warning" style="margin:2px">Edit</a><br>
                                 <a href="<?php echo base_url('manage_fee_sheets/delete/' . $row['fees_id']); ?>" class="btn btn-danger" style="margin:2px" onclick="return confirm('Are you sure to delete data?')?true:false;">Delete</a><br>

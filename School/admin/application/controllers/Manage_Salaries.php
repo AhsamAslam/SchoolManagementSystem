@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Manage_Fee_Sheets extends CI_Controller
+class Manage_Salaries extends CI_Controller
 {
 
     function __construct()
@@ -9,16 +9,14 @@ class Manage_Fee_Sheets extends CI_Controller
         parent::__construct();
 
         // Load product model 
-        $this->load->model('Fee_Sheet_model');
-        $this->load->model('Student_model');
-        $this->load->model('Class_model');
-        $this->load->model('Section_model');
+        $this->load->model('Salary_model');
+        $this->load->model('Teacher_model');
 
         $this->load->helper('form');
         $this->load->library('form_validation');
 
         // Default controller name 
-        $this->controller = 'Manage_Fee_Sheets';
+        $this->controller = 'Manage_Salaries';
     }
 
     public function index()
@@ -33,41 +31,40 @@ class Manage_Fee_Sheets extends CI_Controller
             $this->session->unset_userdata('error_msg');
         }
 
-        $data['students'] = $this->Student_model->getSectionNames();
-        $data['fee_sheets'] = $this->Fee_Sheet_model->getAllStudents();
-        // echo "<pre>"; print_r($data['students']);
+        // $data['teachers'] = $this->Teacher_model->getSectionNames();
+        $data['salaries'] = $this->Salary_model->getAllTeachers();
+        // echo "<pre>"; print_r($data['teachers']);
 
-        $data['title'] = 'Submit Fee';
+        $data['title'] = 'Submit Salary';
 
         $this->load->view('templates/header');
-        $this->load->view('manage_fee_sheets/index', $data);
+        $this->load->view('manage_salaries/index', $data);
         $this->load->view('templates/footer');
     }
 
     public function add()
     {
-        $data = $feeSheetData = array();
+        $data = $salaryData = array();
         $error = '';
 
         // If add request is submitted 
         if ($this->input->post('Submit')) {
+        // echo "<pre>"; print_r($_POST); exit();
 
             // Prepare data 
-            $feeSheetData = array(
-                'fees_student_id' => $this->input->post('fee_student'),
-                'fees_student_class_id' => $this->input->post('fee_student_class'),
-                'fees_student_class_section_id' => $this->input->post('fee_student_class_section'),
-                'fees_submitted_amount' => $this->input->post('fee_amount'),
-                'fees_submitted_date' => $this->input->post('fee_submit_date'),
-                'fees_is_submitted' => $this->input->post('feeCheck')
+            $salaryData = array(
+                'salary_teacher_id' => $this->input->post('salary_teacher'),
+                'salary_teacher_amount' => $this->input->post('salary_amount'),
+                'salary_paid_date' => $this->input->post('salary_paid_date'),
+                'salary_is_paid' => $this->input->post('salaryCheck')
             );
 
             if (empty($error)) {
                 // Insert data 
-                $insert = $this->Fee_Sheet_model->insert($feeSheetData);
+                $insert = $this->Salary_model->insert($salaryData);
 
                 if ($insert) {
-                    $this->session->set_userdata('success_msg', 'Fee has been added successfully.');
+                    $this->session->set_userdata('success_msg', 'Salary has been added successfully.');
                     redirect($this->controller);
                 } else {
                     $error = 'Some problems occurred, please try again.';
@@ -78,27 +75,25 @@ class Manage_Fee_Sheets extends CI_Controller
             // } 
         }
 
-        $data['students'] = $this->Student_model->getRows();
-        $data['classes'] = $this->Class_model->getRows();
-        $data['sections'] = $this->Section_model->getRows();
-        $data['feeSheet'] = $this->Fee_Sheet_model->getRows();
+        $data['teachers'] = $this->Teacher_model->getRows();
+        $data['salary'] = $this->Salary_model->getRows();
         // echo "<pre>"; print_r($data); exit();
-        $data['title'] = 'Submit Fee';
+        $data['title'] = 'Submit Salary';
         $data['action'] = 'Upload';
 
         // Load the add page view 
         $this->load->view('templates/header', $data);
-        $this->load->view('manage_fee_sheets/add', $data);
+        $this->load->view('manage_salaries/add', $data);
         $this->load->view('templates/footer');
     }
 
     public function edit($id)
     {
-        $data = $feeSheetData = array();
+        $data = $salaryData = array();
 
         // Get image data 
         $con = array('id' => $id);
-        $feeSheetData = $this->Fee_Sheet_model->getRows($con);
+        $salaryData = $this->Salary_model->getRows($con);
 
         // If update request is submitted 
         if ($this->input->post('Submit')) {
@@ -106,18 +101,18 @@ class Manage_Fee_Sheets extends CI_Controller
             // $this->form_validation->set_rules('title', 'gallery title', 'required'); 
 
             // Prepare gallery data 
-            $feeSheetData = array(
-                'fees_submitted_date' => $this->input->post('fee_submit_date'),
-                'fees_is_submitted' => $this->input->post('feeCheck')
+            $salaryData = array(
+                'salary_paid_date' => $this->input->post('salary_paid_date'),
+                'salary_is_paid' => $this->input->post('salaryCheck')
             );
 
-            // echo "<pre>"; print_r($feeSheetData); exit();
+            // echo "<pre>"; print_r($salaryData); exit();
             if (empty($error)) {
                 // Update image data 
-                $update = $this->Fee_Sheet_model->update($feeSheetData, $id);
+                $update = $this->Salary_model->update($salaryData, $id);
 
                 if ($update) {
-                    $this->session->set_userdata('success_msg', 'Fee has been updated successfully.');
+                    $this->session->set_userdata('success_msg', 'Salary has been updated successfully.');
                     redirect($this->controller);
                 } else {
                     $error = 'Some problems occurred, please try again.';
@@ -128,9 +123,9 @@ class Manage_Fee_Sheets extends CI_Controller
             // } 
         }
 
-        $data['students'] = $this->Student_model->getSectionNames();
-        $data['feeSheet'] = $feeSheetData;
-        $data['title'] = 'Update Fee_Sheet';
+        $data['teachers'] = $this->Teacher_model->getRows();
+        $data['salary'] = $salaryData;
+        $data['title'] = 'Update Salary';
         $data['action'] = 'Edit';
 
         // Load the edit page view 
@@ -143,17 +138,17 @@ class Manage_Fee_Sheets extends CI_Controller
     {
         // Check whether id is not empty 
         if ($id) {
-            $con = array('fees_id' => $id);
-            $feeSheetData = $this->Fee_Sheet_model->getRows($con);
-            $feeSheetData = array(
-                'fees_is_active' => ('0')
+            $con = array('salary_id' => $id);
+            $salaryData = $this->Salary_model->getRows($con);
+            $salaryData = array(
+                'salary_is_active' => ('0')
             );
 
             // Delete data 
-            $delete = $this->Fee_Sheet_model->update($feeSheetData, $id);
+            $delete = $this->Salary_model->update($salaryData, $id);
 
             if ($delete) {
-                $this->session->set_userdata('success_msg', 'Fee has been removed successfully.');
+                $this->session->set_userdata('success_msg', 'Salary has been removed successfully.');
             } else {
                 $this->session->set_userdata('error_msg', 'Some problems occurred, please try again.');
             }
@@ -162,7 +157,7 @@ class Manage_Fee_Sheets extends CI_Controller
         redirect($this->controller);
     }
 
-    public function showStudents()
+    public function showTeachers()
     {
         if ($this->session->userdata('success_msg')) {
             $data['success_msg'] = $this->session->userdata('success_msg');
@@ -172,27 +167,25 @@ class Manage_Fee_Sheets extends CI_Controller
             $data['error_msg'] = $this->session->userdata('error_msg');
             $this->session->unset_userdata('error_msg');
         }
-        $studentsData = array();
-        $students = $this->Student_model->getSectionNames();
-        foreach ($students as $student) {
-            $studentsData[] = array(
-                'fees_student_id' => $student['student_id'],
-                'fees_student_class_id' => $student['student_class_id'],
-                'fees_student_class_section_id' => $student['student_section_id'],
-                'fees_submitted_amount' => $student['student_tuition_fee']
+        $teachersData = array();
+        $teachers = $this->Teacher_model->getRows();
+        foreach ($teachers as $teacher) {
+            $teachersData[] = array(
+                'salary_teacher_id' => $teacher['teacher_id'],
+                'salary_teacher_amount' => $teacher['teacher_salary']
             );
         }
 
-        //   echo "<pre>"; print_r($data['studentData']); exit();
+        //   echo "<pre>"; print_r($data['teacherData']); exit();
 
         if (empty($error)) {
             // Insert data 
             $date = date("Y-m");
             // echo $date; exit();
-            $insert = $this->Fee_Sheet_model->insertArray($studentsData);
+            $insert = $this->Salary_model->insertArray($teachersData);
 
             if ($insert) {
-                $this->session->set_userdata('success_msg', 'Fee has been added successfully.');
+                $this->session->set_userdata('success_msg', 'Salary has been added successfully.');
                 redirect($this->controller);
             } else {
                 $error = 'Some problems occurred, please try again.';
@@ -200,13 +193,13 @@ class Manage_Fee_Sheets extends CI_Controller
         }
 
         $data['error_msg'] = $error;
-        $data['students'] = $students;
+        $data['teachers'] = $teachers;
 
-        $data['fee_sheets'] = $this->Fee_Sheet_model->getRows();
-        $data['title'] = 'Submit Fee';
+        $data['salaries'] = $this->Salary_model->getRows();
+        $data['title'] = 'Submit Salary';
 
         $this->load->view('templates/header');
-        $this->load->view('manage_fee_sheets/index', $data);
+        $this->load->view('manage_salaries/index', $data);
         $this->load->view('templates/footer');
     }
 }
