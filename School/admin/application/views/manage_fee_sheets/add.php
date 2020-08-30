@@ -1,3 +1,4 @@
+<?php $this->load->view('templates/header');?>
 <script>
 var studentsJSArray =  <?php echo json_encode($students); ?>;
 </script>
@@ -91,4 +92,6 @@ var studentsJSArray =  <?php echo json_encode($students); ?>;
         </div>
     </div>
 </div>
+<?php $this->load->view('templates/footer');?>
 <script src="<?php echo base_url();?>/assets/sidebar/js/manage_fee_sheets.js"></script>
+

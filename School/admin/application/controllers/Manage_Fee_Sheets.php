@@ -39,9 +39,7 @@ class Manage_Fee_Sheets extends CI_Controller
 
         $data['title'] = 'Submit Fee';
 
-        $this->load->view('templates/header');
         $this->load->view('manage_fee_sheets/index', $data);
-        $this->load->view('templates/footer');
     }
 
     public function add()
@@ -173,20 +171,18 @@ class Manage_Fee_Sheets extends CI_Controller
             $this->session->unset_userdata('error_msg');
         }
         $result = $this->Fee_Sheet_model->getStudentsForFee();
-        if($result != false)
+        if(count($result) == 1)
         {
             $studentsData = array();
-            $students = $this->Fee_Sheet_model->getStudentsForFee();
+            $students = $this->Student_model->getSectionNames();
             foreach ($students as $student) {
                 $studentsData[] = array(
-                    'fees_student_id' => $student['fees_student_id'],
+                    'fees_student_id' => $student['student_id'],
                     'fees_student_class_id' => $student['student_class_id'],
                     'fees_student_class_section_id' => $student['student_section_id'],
                     'fees_submitted_amount' => $student['student_tuition_fee']
                 );
             }
-
-            //   echo "<pre>"; print_r($data['studentData']); exit();
 
             if (empty($error)) {
                 // Insert data 
@@ -196,22 +192,12 @@ class Manage_Fee_Sheets extends CI_Controller
 
                 if ($insert) {
                     $this->session->set_userdata('success_msg', 'Fee has been added successfully.');
-                    redirect($this->controller);
                 } else {
-                    $error = 'Some problems occurred, please try again.';
+                    $this->session->set_userdata('error_msg','Some problems occurred, please try again.');
                 }
+                
             }
-
-            $data['error_msg'] = $error;
-            $data['students'] = $students;
-
-            $data['fee_sheets'] = $this->Fee_Sheet_model->getRows();
-            $data['title'] = 'Submit Fee';
-
         }
-        
-        $this->load->view('templates/header');
-        $this->load->view('manage_fee_sheets/index', $data);
-        $this->load->view('templates/footer');
+        redirect($this->controller);
     }
 }
