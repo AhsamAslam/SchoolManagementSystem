@@ -13,6 +13,7 @@ class Manage_Results extends CI_Controller
         $this->load->model('Student_model');
         $this->load->model('Class_model');
         $this->load->model('Section_model');
+        $this->load->model('Course_model');
 
         $this->load->helper('form');
         $this->load->library('form_validation');
@@ -23,6 +24,7 @@ class Manage_Results extends CI_Controller
 
     public function index()
     {
+
         // Get messages from the session 
         if ($this->session->userdata('success_msg')) {
             $data['success_msg'] = $this->session->userdata('success_msg');
@@ -47,16 +49,20 @@ class Manage_Results extends CI_Controller
 
         // If add request is submitted 
         if ($this->input->post('Submit')) {
-
+            $jsArray = ($_POST['jsArray']);
+            // echo "<pre>"; print_r($jsArray); exit();
             // Prepare data 
-            $resultData = array(
-                'result_student_id' => $this->input->post('result_student'),
-                'result_student_class_id' => $this->input->post('result_student_class'),
-                'result_student_class_section_id' => $this->input->post('result_student_class_section'),
-                'result_total_marks' => $this->input->post('total_marks'),
-                'result_obtained_marks' => $this->input->post('obtained_marks')
-            );
-            // echo "<pre>"; print_r($_POST); exit();
+            foreach ($jsArray as $courseResult) {
+                $resultData = array(
+                    'result_student_id' => $this->input->post('result_student'),
+                    'result_student_class_id' => $this->input->post('result_student_class'),
+                    'result_student_class_section_id' => $this->input->post('result_student_class_section'),
+                    'result_course_id' => $courseResult['id'],
+                    'result_obtained_marks' => $courseResult['obtainedMarks'],
+                    'result_total_marks' => $courseResult['totalMarks'],
+                    'result_date' => $this->input->post('result_date')
+                );
+            }
             if (empty($error)) {
                 // Insert data 
                 $insert = $this->Result_model->insert($resultData);
@@ -76,14 +82,15 @@ class Manage_Results extends CI_Controller
         $data['students'] = $this->Student_model->getRows();
         $data['classes'] = $this->Class_model->getRows();
         $data['sections'] = $this->Section_model->getRows();
-            // echo "<pre>"; print_r($data['students']); exit();
+        $data['courses'] = $this->Course_model->getRows();
+        // echo "<pre>"; print_r($data['students']); exit();
 
         $data['result'] = $resultData;
         $data['title'] = 'Add a Result';
         $data['action'] = 'Upload';
 
         // Load the add page view 
-        $this->load->view('manage_results/add-edit', $data);
+        $this->load->view('manage_results/add', $data);
     }
 
     public function edit($id)
@@ -93,7 +100,7 @@ class Manage_Results extends CI_Controller
         // Get previous data 
         $con = array('id' => $id);
         $resultData = $this->Result_model->getRows($con);
-            // echo "<pre>"; print_r($data['students']); exit();
+        // echo "<pre>"; print_r($data['students']); exit();
 
         // If update request is submitted 
         if ($this->input->post('Submit')) {
@@ -143,12 +150,53 @@ class Manage_Results extends CI_Controller
             );
 
             // Delete data 
-            $delete = $this->Result_model->update($resultData,$id);
+            $delete = $this->Result_model->update($resultData, $id);
 
             if ($delete) {
                 $this->session->set_userdata('success_msg', 'Result has been removed successfully.');
             } else {
                 $this->session->set_userdata('error_msg', 'Some problems occurred, please try again.');
+            }
+        }
+        redirect($this->controller);
+    }
+
+    public function showStudents()
+    {
+        if ($this->session->userdata('success_msg')) {
+            $data['success_msg'] = $this->session->userdata('success_msg');
+            $this->session->unset_userdata('success_msg');
+        }
+        if ($this->session->userdata('error_msg')) {
+            $data['error_msg'] = $this->session->userdata('error_msg');
+            $this->session->unset_userdata('error_msg');
+        }
+        $result = $this->Result_model->getStudentsForResult();
+        if (count($result) == 1) {
+            $studentsData = array();
+            $students = $this->Student_model->getRows();
+            foreach ($students as $student) {
+                $studentsData[] = array(
+                    'result_student_id' => $student['student_id'],
+                    'result_student_class_id' => $student['student_class_id'],
+                    'result_student_class_section_id' => $student['student_section_id']
+                );
+            }
+
+            //   echo "<pre>"; print_r($data['teacherData']); exit();
+
+            if (empty($error)) {
+                // Insert data 
+                $date = date("Y-m");
+                // echo $date; exit();
+                $insert = $this->Result_model->insertArray($studentsData);
+
+                if ($insert) {
+                    $this->session->set_userdata('success_msg', 'Salary has been added successfully.');
+                    redirect($this->controller);
+                } else {
+                    $error = 'Some problems occurred, please try again.';
+                }
             }
         }
         redirect($this->controller);

@@ -16,6 +16,21 @@ class Result_model extends CI_Model{
         } 
         return false; 
     } 
+
+    public function insertArray($data = array())
+    {
+        if (!empty($data)) {
+            // Insert member data 
+        //   echo "<pre>"; print_r($studentsData); exit();
+            foreach ($data as $data){
+            $insert = $this->db->insert($this->table, $data);
+            } 
+            // Return the status 
+            return $insert ? $this->db->insert_id() : false;
+        }
+        return false;
+    }
+
     public function getRows($params = array()){ 
         $this->db->select('*'); 
         $this->db->from($this->table); 
@@ -81,4 +96,21 @@ class Result_model extends CI_Model{
         $result = ($query->num_rows() > 0) ? $query->result_array() : FALSE;
         return $result;
     }
+
+    public function getStudentsForResult()
+    {
+        $array = array('Month(r.created) !=' => 'Month(NOW()', 'Year(r.created) !=' => 'Year(NOW())', 'st.student_is_active' => '1');
+        $query = $this->db->select('r.*')
+                ->from('results r')
+                ->join('students st' ,'r.result_student_id = st.student_id')
+                ->join('sections s', 'r.result_student_class_section_id = s.section_id')
+                ->join('classes c', 'r.result_student_class_id = c.class_id')
+                ->where($array)
+                ->get();
+        $result = ($query->num_rows() > 0) ? $query->result_array() : FALSE;
+        // var_dump($result); exit();
+        return $result;
+    }
+
+    
 }

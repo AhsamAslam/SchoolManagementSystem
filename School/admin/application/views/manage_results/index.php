@@ -1,4 +1,4 @@
-<?php $this->load->view('templates/header');?>
+<?php $this->load->view('templates/header'); ?>
 <div class="container">
     <h2>Results Management</h2>
 
@@ -18,6 +18,7 @@
             <!-- <h5><?php echo $title; ?></h5> -->
             <!-- Add link -->
             <div class="float-center mb-5">
+                <a href="<?php echo base_url('Manage_Results/showStudents'); ?>" class="btn btn-success" style="margin-bottom: 2px;"><i class="plus"></i> Show Students</a>
                 <a href="<?php echo base_url('Manage_Results/add'); ?>" class="btn btn-success" style="margin-bottom: 2px;"><i class="plus"></i> Add a Result</a>
             </div>
         </div>
@@ -46,9 +47,13 @@
                         $resultSection = $row['section_name'];
                         $resultTotalMarks = $row['result_total_marks'];
                         $resultObtainedMarks = $row['result_obtained_marks'];
-                        $Percentage = $row['result_obtained_marks']/$row['result_total_marks']*100;
+                        if (empty(!$resultObtainedMarks)) {
+                            $Percentage = $row['result_obtained_marks'] / $row['result_total_marks'] * 100;
+                        } else{
+                            $Percentage ="";
+                        }
                         $resultPercentage = number_format((float)$Percentage, 2, '.', '');
-                       
+
                 ?>
                         <tr>
                             <td><?php echo $i; ?></td>
@@ -73,4 +78,4 @@
         </table>
     </div>
 </div>
-<?php $this->load->view('templates/footer');?>
+<?php $this->load->view('templates/footer'); ?>

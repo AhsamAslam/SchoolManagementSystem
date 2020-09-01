@@ -18,7 +18,7 @@ var teachersJSArray =  <?php echo json_encode($teachers); ?>;
             <form method="post" action="" enctype="multipart/form-data">
                 <div class="form-group">
                     <label>Teacher:</label>
-                    <select class="browser-default custom-select school_select2" name="salary_teacher" required>
+                    <select class="browser-default custom-select school_select2" name="salary_teacher" onchange='selectedTeacherSalary(this)' required>
                         <option selected disabled value>Select Teacher</option>
                         <?php if (!empty($teachers)) {
                             $i = 0;

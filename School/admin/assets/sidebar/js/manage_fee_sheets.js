@@ -1,5 +1,5 @@
  function selectedStudentFee(obj) {
-     console.log(obj)
+     //  console.log(obj)
      let id = $(obj).val();
      let student = studentsJSArray.filter(function(s) {
          return s.student_id == id;
