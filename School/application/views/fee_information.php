@@ -1,3 +1,4 @@
+<?php $this->load->view('templates/header');?>
 <style>
     html,
 body {
@@ -12,15 +13,16 @@ body {
 }
 
 .container2 {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	position: relative;
+	width: 100%;
+	height: 100vh;
 }
 
 table {
+  margin: 0 auto;
 	width: 50vw;
-	height: 30vh;
+	height: 50vh;
+  padding-top: 100px;
 	border-collapse: collapse;
 	overflow: hidden;
 	box-shadow: 0 0 20px rgba(0,0,0,0.1);
@@ -113,3 +115,4 @@ tbody td:hover:before {
       </tr> -->
   </table>
 </div>
+<?php $this->load->view('templates/footer');?>

@@ -1,3 +1,4 @@
+<?php $this->load->view('templates/header');?>
 <style>
     /* body > section{
         display: block;
@@ -79,3 +80,5 @@
         </div><!-- end row -->
     </div><!-- end container -->
 </section>
+
+<?php $this->load->view('templates/footer');?>

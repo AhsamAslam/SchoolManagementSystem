@@ -116,4 +116,16 @@ class Salary_model extends CI_Model
         $result = ($query->num_rows() > 0) ? $query->result_array() : FALSE;
         return $result;
     }
+
+    public function getTeachersForSalary()
+    {
+        $array = array('Month(s.created) !=' => 'Month(NOW()', 'Year(s.created) !=' => 'Year(NOW())', 't.teacher_is_active' => '1');
+        $query = $this->db->select('s.*')
+                ->from('salaries s')
+                ->join('teachers t' ,'s.salary_teacher_id = t.teacher_id')
+                ->where($array)
+                ->get();
+        $result = ($query->num_rows() > 0) ? $query->result_array() : FALSE;
+        return $result;
+    }
 }

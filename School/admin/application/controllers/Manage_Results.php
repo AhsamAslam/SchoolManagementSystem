@@ -37,9 +37,7 @@ class Manage_Results extends CI_Controller
         // echo "<pre>"; print_r($data['results']); exit();
         $data['title'] = 'Add Result';
 
-        $this->load->view('templates/header');
         $this->load->view('manage_results/index', $data);
-        $this->load->view('templates/footer');
     }
 
     public function add()
@@ -85,9 +83,7 @@ class Manage_Results extends CI_Controller
         $data['action'] = 'Upload';
 
         // Load the add page view 
-        $this->load->view('templates/header', $data);
         $this->load->view('manage_results/add-edit', $data);
-        $this->load->view('templates/footer');
     }
 
     public function edit($id)
@@ -133,9 +129,7 @@ class Manage_Results extends CI_Controller
         $data['action'] = 'Edit';
 
         // Load the edit page view 
-        $this->load->view('templates/header', $data);
         $this->load->view($this->controller . '/add-edit', $data);
-        $this->load->view('templates/footer');
     }
 
     public function delete($id)

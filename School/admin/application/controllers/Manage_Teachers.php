@@ -33,9 +33,7 @@ class Manage_Teachers extends CI_Controller
         $data['teachers'] = $this->teacher_model->getRows();
         $data['title'] = 'Add Teacher';
 
-        $this->load->view('templates/header');
         $this->load->view('Manage_Teachers/index', $data);
-        $this->load->view('templates/footer');
     }
 
     public function add()
@@ -110,9 +108,7 @@ class Manage_Teachers extends CI_Controller
         $data['action'] = 'Upload';
 
         // Load the add page view 
-        $this->load->view('templates/header', $data);
         $this->load->view('Manage_Teachers/add-edit', $data);
-        $this->load->view('templates/footer');
     }
 
     public function edit($id)
@@ -193,9 +189,7 @@ class Manage_Teachers extends CI_Controller
         $data['action'] = 'Edit';
 
         // Load the edit page view 
-        $this->load->view('templates/header', $data);
         $this->load->view($this->controller . '/add-edit', $data);
-        $this->load->view('templates/footer');
     }
 
     public function delete($id)

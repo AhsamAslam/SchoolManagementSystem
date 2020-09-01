@@ -1,3 +1,4 @@
+<?php $this->load->view('templates/header');?>
 <style>
     #wrapper > header > div.topbar.clearfix{     
         margin-bottom: 0px;
@@ -186,3 +187,4 @@
         </div>
     </div><!-- end container -->
 </section>
+<?php $this->load->view('templates/footer');?>

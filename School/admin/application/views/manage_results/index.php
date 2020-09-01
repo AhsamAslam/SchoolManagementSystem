@@ -1,3 +1,4 @@
+<?php $this->load->view('templates/header');?>
 <div class="container">
     <h2>Results Management</h2>
 
@@ -72,3 +73,4 @@
         </table>
     </div>
 </div>
+<?php $this->load->view('templates/footer');?>

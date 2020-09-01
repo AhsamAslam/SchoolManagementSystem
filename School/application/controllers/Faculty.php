@@ -1,13 +1,24 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Faculty extends CI_Controller {
+class Faculty extends CI_Controller
+{
 
-	
+	function __construct()
+	{
+		parent::__construct();
+
+		// Load model 
+		$this->load->model('teacher_model');
+
+		// Default controller name 
+		$this->controller = 'Faculty';
+	}
+
 	public function index()
 	{
-		// $this->load->view('templates/header');
-		$this->load->view('faculty');
-		// $this->load->view('templates/footer');
+		$data['teachers'] = $this->teacher_model->getRows();
+
+		$this->load->view('faculty',$data);
 	}
 }

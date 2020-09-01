@@ -1,3 +1,4 @@
+<?php $this->load->view('templates/header');?>
 <div class="container">
     <h1><?php echo $title; ?></h1>
     <hr>
@@ -114,3 +115,4 @@
         </div>
     </div>
 </div>
+<?php $this->load->view('templates/footer');?>

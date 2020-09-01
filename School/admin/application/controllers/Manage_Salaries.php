@@ -37,9 +37,7 @@ class Manage_Salaries extends CI_Controller
 
         $data['title'] = 'Submit Salary';
 
-        $this->load->view('templates/header');
         $this->load->view('manage_salaries/index', $data);
-        $this->load->view('templates/footer');
     }
 
     public function add()
@@ -49,7 +47,7 @@ class Manage_Salaries extends CI_Controller
 
         // If add request is submitted 
         if ($this->input->post('Submit')) {
-        // echo "<pre>"; print_r($_POST); exit();
+            // echo "<pre>"; print_r($_POST); exit();
 
             // Prepare data 
             $salaryData = array(
@@ -82,9 +80,7 @@ class Manage_Salaries extends CI_Controller
         $data['action'] = 'Upload';
 
         // Load the add page view 
-        $this->load->view('templates/header', $data);
         $this->load->view('manage_salaries/add', $data);
-        $this->load->view('templates/footer');
     }
 
     public function edit($id)
@@ -102,6 +98,7 @@ class Manage_Salaries extends CI_Controller
 
             // Prepare gallery data 
             $salaryData = array(
+                'salary_teacher_amount' => $this->input->post('salary_amount'),
                 'salary_paid_date' => $this->input->post('salary_paid_date'),
                 'salary_is_paid' => $this->input->post('salaryCheck')
             );
@@ -129,9 +126,7 @@ class Manage_Salaries extends CI_Controller
         $data['action'] = 'Edit';
 
         // Load the edit page view 
-        $this->load->view('templates/header', $data);
         $this->load->view($this->controller . '/add-edit', $data);
-        $this->load->view('templates/footer');
     }
 
     public function delete($id)
@@ -167,39 +162,34 @@ class Manage_Salaries extends CI_Controller
             $data['error_msg'] = $this->session->userdata('error_msg');
             $this->session->unset_userdata('error_msg');
         }
-        $teachersData = array();
-        $teachers = $this->Teacher_model->getRows();
-        foreach ($teachers as $teacher) {
-            $teachersData[] = array(
-                'salary_teacher_id' => $teacher['teacher_id'],
-                'salary_teacher_amount' => $teacher['teacher_salary']
-            );
-        }
+        $result = $this->Salary_model->getTeachersForSalary();
+        if (count($result) == 1) {
+            $teachersData = array();
+            $teachers = $this->Teacher_model->getRows();
+            foreach ($teachers as $teacher) {
+                $teachersData[] = array(
+                    'salary_teacher_id' => $teacher['teacher_id'],
+                    'salary_teacher_amount' => $teacher['teacher_salary']
+                );
+            }
 
-        //   echo "<pre>"; print_r($data['teacherData']); exit();
+            //   echo "<pre>"; print_r($data['teacherData']); exit();
 
-        if (empty($error)) {
-            // Insert data 
-            $date = date("Y-m");
-            // echo $date; exit();
-            $insert = $this->Salary_model->insertArray($teachersData);
+            if (empty($error)) {
+                // Insert data 
+                $date = date("Y-m");
+                // echo $date; exit();
+                $insert = $this->Salary_model->insertArray($teachersData);
 
-            if ($insert) {
-                $this->session->set_userdata('success_msg', 'Salary has been added successfully.');
-                redirect($this->controller);
-            } else {
-                $error = 'Some problems occurred, please try again.';
+                if ($insert) {
+                    $this->session->set_userdata('success_msg', 'Salary has been added successfully.');
+                    redirect($this->controller);
+                } else {
+                    $error = 'Some problems occurred, please try again.';
+                }
             }
         }
-
-        $data['error_msg'] = $error;
-        $data['teachers'] = $teachers;
-
-        $data['salaries'] = $this->Salary_model->getRows();
-        $data['title'] = 'Submit Salary';
-
-        $this->load->view('templates/header');
-        $this->load->view('manage_salaries/index', $data);
-        $this->load->view('templates/footer');
+        redirect($this->controller);
+        
     }
 }

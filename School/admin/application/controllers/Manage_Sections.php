@@ -33,9 +33,7 @@ class Manage_Sections extends CI_Controller
         $data['sections'] = $this->Section_model->getRows();
         $data['title'] = 'Add Section';
 
-        $this->load->view('templates/header');
         $this->load->view('manage_sections/index', $data);
-        $this->load->view('templates/footer');
     }
 
     public function add()
@@ -73,9 +71,7 @@ class Manage_Sections extends CI_Controller
         $data['action'] = 'Upload';
 
         // Load the add page view 
-        $this->load->view('templates/header', $data);
         $this->load->view('manage_sections/add-edit', $data);
-        $this->load->view('templates/footer');
     }
 
     public function edit($id){ 
@@ -117,9 +113,7 @@ class Manage_Sections extends CI_Controller
         $data['action'] = 'Edit'; 
          
         // Load the edit page view 
-        $this->load->view('templates/header', $data); 
         $this->load->view($this->controller.'/add-edit', $data); 
-        $this->load->view('templates/footer'); 
     }
 
     public function delete($id){ 

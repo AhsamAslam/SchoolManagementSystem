@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="<?php echo base_url();?>/assets/sidebar/style.css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
     <!-- Our Custom CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <title>School Management System</title>
 </head>
 
