@@ -52,17 +52,17 @@ class Manage_Results extends CI_Controller
             $jsArray = ($_POST['jsArray']);
             // echo "<pre>"; print_r($jsArray); exit();
             // Prepare data 
-            foreach ($jsArray as $courseResult) {
+            // foreach ($jsArray as $courseResult) {
                 $resultData = array(
                     'result_student_id' => $this->input->post('result_student'),
                     'result_student_class_id' => $this->input->post('result_student_class'),
                     'result_student_class_section_id' => $this->input->post('result_student_class_section'),
-                    'result_course_id' => $courseResult['id'],
-                    'result_obtained_marks' => $courseResult['obtainedMarks'],
-                    'result_total_marks' => $courseResult['totalMarks'],
+                    // 'result_course_id' => $courseResult['id'],
+                    // 'result_obtained_marks' => $courseResult['obtainedMarks'],
+                    // 'result_total_marks' => $courseResult['totalMarks'],
                     'result_date' => $this->input->post('result_date')
                 );
-            }
+            // }
             if (empty($error)) {
                 // Insert data 
                 $insert = $this->Result_model->insert($resultData);
@@ -80,6 +80,7 @@ class Manage_Results extends CI_Controller
         }
 
         $data['students'] = $this->Student_model->getRows();
+        $data['allStudents'] = $this->Student_model->getSectionNames();
         $data['classes'] = $this->Class_model->getRows();
         $data['sections'] = $this->Section_model->getRows();
         $data['courses'] = $this->Course_model->getRows();

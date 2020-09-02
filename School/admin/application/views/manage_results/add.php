@@ -1,4 +1,7 @@
 <?php $this->load->view('templates/header'); ?>
+<script>
+var studentsJSArray =  <?php echo json_encode($allStudents); ?>;
+</script>
 <div class="container">
     <h1><?php echo $title; ?></h1>
     <hr>
@@ -17,7 +20,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Student:</label>
-                            <select class="browser-default custom-select school_select2" name="result_student" required>
+                            <select class="browser-default custom-select school_select2" name="result_student" onchange='selectedStudentResult(this)' required>
                                 <option selected disabled value>Select Student</option>
                                 <?php if (!empty($students)) {
                                     $i = 0;
@@ -37,7 +40,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Class:</label>
-                            <select class="browser-default custom-select" name="result_student_class" required>
+                            <select class="browser-default custom-select" name="result_student_class" id="studentClass" required disabled>
                                 <option selected disabled value>Select Class</option>
                                 <?php if (!empty($classes)) {
                                     $i = 0;
@@ -57,7 +60,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Section:</label>
-                            <select class="browser-default custom-select" name="result_student_class_section" required>
+                            <select class="browser-default custom-select" name="result_student_class_section" id="studentSection" required disabled>
                                 <option selected disabled value>Select Section</option>
                                 <?php if (!empty($sections)) {
                                     $i = 0;
@@ -113,7 +116,6 @@
                                 <div class="form-group">
                                     <label>Add course:</label><br>
                                     <input type="button" class="btn btn-primary" id="addCourse" class="btn btn-success" value="Add">
-                                    <input type="button" class="btn btn-primary" id="save" class="btn btn-success" value="Save">
                                 </div>
                             </div>
 

@@ -60,3 +60,18 @@ function DeleteRow(r) {
     var i = r.parentNode.parentNode.rowIndex;
     document.getElementById("data_table").deleteRow(i);
 }
+
+function selectedStudentResult(obj) {
+    // console.log(obj)
+    let id = $(obj).val();
+    let student = studentsJSArray.filter(function(s) {
+        return s.student_id == id;
+    });
+    $("#studentClass").val(student[0].class_id);
+    $("#studentSection").val(student[0].section_id);
+    // console.log(student[0].student_id)
+    // console.log(student[0].section_id)
+    // console.log(student[0].class_id)
+    // section_id
+    // class_id
+}

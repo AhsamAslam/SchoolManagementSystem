@@ -1,5 +1,5 @@
  function selectedTeacherSalary(obj) {
-     console.log(obj)
+     //  console.log(obj)
      let id = $(obj).val();
      let teacher = teachersJSArray.filter(function(t) {
          return t.teacher_id == id;
