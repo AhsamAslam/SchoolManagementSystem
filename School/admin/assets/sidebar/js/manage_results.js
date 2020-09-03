@@ -14,10 +14,10 @@ $(function() {
 
         $('#data_table tbody:last-child').append(
             '<tr>' +
-            '<input id="prodId" name="prodId" type="hidden" value=' + courseId + '>' +
             '<td>' + courseName + '</td>' +
             '<td>' + obtainedMarks + '</td>' +
             '<td>' + totalMarks + '</td>' +
+            '<input id="prodId" name="prodId" type="hidden" value=' + courseId + '>' +
             '<td class="text-center"><button type="button" class="btn btn-danger btn-sm btn-delete-address" onclick = "DeleteRow(this)"><i class="fa fa-trash-o"></i></button></td>' +
             '</tr>'
         );

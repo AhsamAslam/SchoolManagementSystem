@@ -18,8 +18,6 @@ class Results extends CI_Controller {
 	{
         $data['results'] = $this->Result_model->getAllStudents();
 
-		$this->load->view('templates/header');
 		$this->load->view('results',$data);
-		$this->load->view('templates/footer');
 	}
 }

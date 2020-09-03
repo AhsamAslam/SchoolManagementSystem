@@ -49,17 +49,17 @@ class Manage_Results extends CI_Controller
 
         // If add request is submitted 
         if ($this->input->post('Submit')) {
-            $jsArray = ($_POST['jsArray']);
-            // echo "<pre>"; print_r($jsArray); exit();
+            $courseResult = $_POST['jsArray'];
+            // echo "<pre>"; print_r($courseResult); exit();
             // Prepare data 
             // foreach ($jsArray as $courseResult) {
                 $resultData = array(
                     'result_student_id' => $this->input->post('result_student'),
                     'result_student_class_id' => $this->input->post('result_student_class'),
                     'result_student_class_section_id' => $this->input->post('result_student_class_section'),
-                    // 'result_course_id' => $courseResult['id'],
-                    // 'result_obtained_marks' => $courseResult['obtainedMarks'],
-                    // 'result_total_marks' => $courseResult['totalMarks'],
+                    'result_course_id' => $courseResult['id'],
+                    'result_obtained_marks' => $courseResult['obtainedMarks'],
+                    'result_total_marks' => $courseResult['totalMarks'],
                     'result_date' => $this->input->post('result_date')
                 );
             // }

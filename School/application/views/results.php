@@ -1,14 +1,7 @@
+<?php $this->load->view('templates/header');?>
 <style>
- #wrapper > header {
-    position: relative;
-    background: black;
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-  #wrapper > header > div.topbar.clearfix{
-    display: none;
-  }
   #wrapper > div.container2{
+    height: 100vh;
     padding: 100px 50px 100px 50px;
   }
 </style>
@@ -35,7 +28,11 @@
                         $resultSection = $row['section_name'];
                         $resultTotalMarks = $row['result_total_marks'];
                         $resultObtainedMarks = $row['result_obtained_marks'];
+                        if(!empty($resultTotalMarks) && !empty($resultObtainedMarks)){
                         $Percentage = $row['result_obtained_marks']/$row['result_total_marks']*100;
+                        }else{
+                          $Percentage = "";
+                        }
                         $resultPercentage = number_format((float)$Percentage, 2, '.', '');
                        
                 ?>
@@ -65,3 +62,4 @@
       </tr> -->
   </table>
 </div>
+<?php $this->load->view('templates/footer');?>

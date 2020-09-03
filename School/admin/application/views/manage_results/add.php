@@ -40,7 +40,7 @@ var studentsJSArray =  <?php echo json_encode($allStudents); ?>;
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Class:</label>
-                            <select class="browser-default custom-select" name="result_student_class" id="studentClass" required disabled>
+                            <select class="browser-default custom-select" name="result_student_class" id="studentClass" required>
                                 <option selected disabled value>Select Class</option>
                                 <?php if (!empty($classes)) {
                                     $i = 0;
@@ -60,7 +60,7 @@ var studentsJSArray =  <?php echo json_encode($allStudents); ?>;
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Section:</label>
-                            <select class="browser-default custom-select" name="result_student_class_section" id="studentSection" required disabled>
+                            <select class="browser-default custom-select" name="result_student_class_section" id="studentSection" required >
                                 <option selected disabled value>Select Section</option>
                                 <?php if (!empty($sections)) {
                                     $i = 0;
