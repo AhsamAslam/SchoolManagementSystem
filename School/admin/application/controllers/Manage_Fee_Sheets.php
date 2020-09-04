@@ -85,9 +85,7 @@ class Manage_Fee_Sheets extends CI_Controller
         $data['action'] = 'Upload';
 
         // Load the add page view 
-        $this->load->view('templates/header', $data);
         $this->load->view('manage_fee_sheets/add', $data);
-        $this->load->view('templates/footer');
     }
 
     public function edit($id)
@@ -105,6 +103,7 @@ class Manage_Fee_Sheets extends CI_Controller
 
             // Prepare gallery data 
             $feeSheetData = array(
+                'fees_submitted_amount' => $this->input->post('fee_amount'),
                 'fees_submitted_date' => $this->input->post('fee_submit_date'),
                 'fees_is_submitted' => $this->input->post('feeCheck')
             );
@@ -132,9 +131,7 @@ class Manage_Fee_Sheets extends CI_Controller
         $data['action'] = 'Edit';
 
         // Load the edit page view 
-        $this->load->view('templates/header', $data);
         $this->load->view($this->controller . '/add-edit', $data);
-        $this->load->view('templates/footer');
     }
 
     public function delete($id)
@@ -186,7 +183,7 @@ class Manage_Fee_Sheets extends CI_Controller
 
             if (empty($error)) {
                 // Insert data 
-                $date = date("Y-m");
+                // $date = date("Y-m");
                 // echo $date; exit();
                 $insert = $this->Fee_Sheet_model->insertArray($studentsData);
 

@@ -1,3 +1,5 @@
+<?php $this->load->view('templates/header');?>
+
 <div class="container">
     <h1><?php echo $title; ?></h1>
     <hr>
@@ -35,8 +37,17 @@
                     <input type="date" class="browser-default custom-select" name="salary_paid_date" value="<?php echo date('Y-m-d'); ?>" required></input>
                     <?php echo form_error('salary_paid_date', '<p class="help-block text-danger">', '</p>'); ?>
                 </div>
+                <div class="form-group">
+                    <label>Salary Amount:</label>
+                    <input type="number" class="browser-default custom-select" name="salary_amount" value="<?php echo !empty($salary['salary_teacher_amount']) ? $salary['salary_teacher_amount'] : ''; ?>" required></input>
+                    <?php echo form_error('salary_amount', '<p class="help-block text-danger">', '</p>'); ?>
+                </div>
                 <div class="form-group custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="salaryCheck" required>
+                    <?php if ($salary['salary_is_paid'] == true) { ?>
+                        <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="salaryCheck" checked required>
+                    <?php } else { ?>
+                        <input type="checkbox" class="custom-control-input" id="customCheck" value="1" name="salaryCheck" required>
+                    <?php } ?>
                     <label class="custom-control-label" for="customCheck">Salary Paid</label>
                 </div>
 
@@ -48,3 +59,4 @@
         </div>
     </div>
 </div>
+<?php $this->load->view('templates/footer');?>

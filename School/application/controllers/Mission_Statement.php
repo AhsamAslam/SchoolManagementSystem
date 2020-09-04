@@ -6,8 +6,6 @@ class Mission_Statement extends CI_Controller {
 	
 	public function index()
 	{
-		// $this->load->view('templates/header');
 		$this->load->view('mission_statement');
-		// $this->load->view('templates/footer');
 	}
 }

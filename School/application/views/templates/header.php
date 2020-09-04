@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <!-- Site Meta -->
-    <title>Edulogy</title>
+    <title>School</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -19,6 +19,8 @@
     <!-- Site Icons -->
     <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
 
 	<!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet"> 
@@ -30,7 +32,15 @@
     <link rel="stylesheet" href="assets/css/carousel.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="assets/style.css">
-
+    <style>
+    #wrapper > header{
+        position: sticky;
+        background: black;
+        padding-top: 15px;
+        padding-bottom: 10px;
+    }
+    
+    </style>
 	<!--[if lt IE 9]>
 		<script src="assets/js/vendor/html5shiv.min.js"></script>
 		<script src="assets/js/vendor/respond.min.js"></script>
@@ -67,7 +77,7 @@
         <!-- END # MODAL LOGIN -->
 
         <header class="header">
-            <div class="topbar clearfix">
+            <div class="topbar clearfix" style="display: none;">
                 <div class="container">
                     <div class="row-fluid">
                         <div class="col-md-6 col-sm-6 text-left">

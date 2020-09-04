@@ -33,9 +33,7 @@ class Manage_Courses extends CI_Controller
         $data['courses'] = $this->Course_model->getRows();
         $data['title'] = 'Add Course';
 
-        $this->load->view('templates/header');
         $this->load->view('manage_courses/index', $data);
-        $this->load->view('templates/footer');
     }
 
     public function add()
@@ -77,9 +75,7 @@ class Manage_Courses extends CI_Controller
         $data['action'] = 'Upload';
 
         // Load the add page view 
-        $this->load->view('templates/header', $data);
         $this->load->view('manage_courses/add-edit', $data);
-        $this->load->view('templates/footer');
     }
 
     public function edit($id)
@@ -120,9 +116,7 @@ class Manage_Courses extends CI_Controller
         $data['action'] = 'Edit';
 
         // Load the edit page view 
-        $this->load->view('templates/header', $data);
         $this->load->view($this->controller . '/add-edit', $data);
-        $this->load->view('templates/footer');
     }
 
     public function delete($id)

@@ -1,3 +1,7 @@
+<?php $this->load->view('templates/header');?>
+<script>
+var teachersJSArray =  <?php echo json_encode($teachers); ?>;
+</script>
 <div class="container">
     <h1><?php echo $title; ?></h1>
     <hr>
@@ -14,13 +18,13 @@
             <form method="post" action="" enctype="multipart/form-data">
                 <div class="form-group">
                     <label>Teacher:</label>
-                    <select class="browser-default custom-select" name="salary_teacher" required>
+                    <select class="browser-default custom-select school_select2" name="salary_teacher" onchange='selectedTeacherSalary(this)' required>
                         <option selected disabled value>Select Teacher</option>
                         <?php if (!empty($teachers)) {
                             $i = 0;
                             foreach ($teachers as $row) {
                                 $i++; ?>
-                                <option value="<?php echo $row["teacher_id"]; ?>"><?php echo $row["teacher_name"]; ?></option>
+                                <option value="<?php echo $row["teacher_id"]; ?>"><?php echo $row["teacher_identification"] . " - " .  $row["teacher_name"]; ?></option>
                             <?php } ?>
                         <?php } ?>
 
@@ -29,7 +33,7 @@
                 </div>
                 <div class="form-group">
                     <label>Salary Amount:</label>
-                    <input type="number" class="browser-default custom-select" name="salary_amount" required></input>
+                    <input type="number" class="browser-default custom-select" name="salary_amount" id="add_salary_amount" required></input>
                     <?php echo form_error('salary_amount', '<p class="help-block text-danger">', '</p>'); ?>
                 </div>
                 <div class="form-group custom-control custom-checkbox">
@@ -54,3 +58,5 @@
         </div>
     </div>
 </div>
+<?php $this->load->view('templates/footer');?>
+<script src="<?php echo base_url();?>/assets/sidebar/js/manage_salaries.js"></script>

@@ -42,9 +42,7 @@ class Manage_Students extends CI_Controller
         $data['students'] = $this->Student_model->getSectionNames();
         $data['title'] = 'Add Student';
 
-        $this->load->view('templates/header');
         $this->load->view('manage_students/index', $data);
-        $this->load->view('templates/footer');
     }
 
     public function add()
@@ -119,9 +117,7 @@ class Manage_Students extends CI_Controller
         $data['action'] = 'Upload';
 
         // Load the add page view 
-        $this->load->view('templates/header', $data);
         $this->load->view('manage_students/add-edit', $data);
-        $this->load->view('templates/footer');
     }
 
     public function edit($id)
@@ -182,7 +178,7 @@ class Manage_Students extends CI_Controller
                     //     @unlink($this->uploadPath . $prevImage);
                     // }
                 } else {
-                    $error = $this->upload->display_errors();
+                    // $error = $this->upload->display_errors();
                 }
             
 
@@ -210,9 +206,7 @@ class Manage_Students extends CI_Controller
         $data['action'] = 'Edit';
 
         // Load the edit page view 
-        $this->load->view('templates/header', $data);
         $this->load->view($this->controller . '/add-edit', $data);
-        $this->load->view('templates/footer');
     }
 
     public function delete($id)
