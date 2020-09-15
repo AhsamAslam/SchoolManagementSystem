@@ -27,14 +27,14 @@
     <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i,700,700i" rel="stylesheet"> 
 	
     <!-- Custom & Default Styles -->
-	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/carousel.css">
-    <link rel="stylesheet" href="assets/css/animate.css">
-    <link rel="stylesheet" href="assets/style.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/carousel.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/animate.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/style.css">
     <style>
     #wrapper > header{
-        position: sticky;
+        position: fixed;
         background: black;
         padding-top: 15px;
         padding-bottom: 10px;
@@ -51,7 +51,7 @@
 
     <!-- LOADER -->
     <div id="preloader">
-        <img class="preloader" src="assets/images/loader.gif" alt="">
+        <img class="preloader" src="<?php echo base_url(); ?>assets/images/loader.gif" alt="">
     </div><!-- end loader -->
     <!-- END LOADER -->
 
@@ -109,7 +109,7 @@
                             <span class="icon-bar"></span>
                         </button>
                         <div class="logo-normal">
-                            <a class="navbar-brand" href=<?php echo base_url(); ?>><img src="assets/images/logo.png" alt=""></a>
+                            <a class="navbar-brand" href=<?php echo base_url(); ?>><img src="<?php echo base_url(); ?>assets/images/logo.png" alt=""></a>
                         </div>
                     </div>
 

@@ -18,6 +18,14 @@ class Results extends CI_Controller {
 	{
         $data['results'] = $this->Result_model->getAllStudents();
 
+		$this->load->view('search',$data);
+    }
+    
+    public function search()
+	{
+        $key = $this->input->post('search');
+        $data['results'] = $this->Result_model->search($key);
+        // print_r($data['results']); exit();
 		$this->load->view('results',$data);
 	}
 }

@@ -12,7 +12,7 @@
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane-o"></i></button>
                             </div>
                         </form>
-                        <img src="assets/images/payments.png" alt="" class="img-responsive">
+                        <img src="<?php echo base_url(); ?>assets/images/payments.png" alt="" class="img-responsive">
                     </div><!-- end newsletter -->
                 </div><!-- end widget -->
             </div><!-- end col -->
@@ -27,7 +27,7 @@
                 </div><!-- end widget -->
             </div><!-- end col -->
 
-            
+
 
             <div class="col-lg-4 col-md-4">
                 <div class="widget clearfix">
@@ -39,7 +39,7 @@
                             <li>Email: school@school.edu.pk</li>
                             <li>Address:</li>
                             <li>15 Canal Bank Rd, Upper Mall Scheme,Lahore, Pakistan</li>
-                            
+
                         </ul>
                     </div><!-- end list-widget -->
                 </div><!-- end widget -->
@@ -54,7 +54,7 @@
         <div class="clearfix">
             <div class="pull-left">
                 <div class="cop-logo">
-                    <a href="#"><img src="assets/images/logo.png" alt=""></a>
+                    <a href="#"><img src="<?php echo base_url(); ?>assets/images/logo.png" alt=""></a>
                 </div>
             </div>
 
@@ -71,13 +71,13 @@
 </div>
 <!-- jQuery Files -->
 
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/carousel.js"></script>
-<script src="assets/js/animate.js"></script>
-<script src="assets/js/custom.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jquery.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/carousel.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/animate.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/custom.js"></script>
 <!-- VIDEO BG PLUGINS -->
-<script src="assets/js/videobg.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/videobg.js"></script>
 <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function() {
@@ -103,6 +103,10 @@
                     });
                 });
             }
+        });
+
+        var table = $('#dt-filter-select-result').DataTable({
+            paging: false, info: false
         });
     });
 </script>

@@ -20,4 +20,17 @@ class Result_model extends CI_Model
         $result = ($query->num_rows() > 0) ? $query->result_array() : FALSE;
         return $result;
     }
+
+    public function search($key){
+        $this->db->select('*');
+        $this->db->from('results r');
+        $this->db->join('students st', 'r.result_student_id = st.student_id');
+        $this->db->join('classes c', 'r.result_student_class_id = c.class_id');
+        $this->db->join('sections s', 'r.result_student_class_section_id = s.section_id' );
+        $this->db->like('st.student_identification', $key);
+        $query = $this->db->get();
+        $result = ($query->num_rows() > 0) ? $query->result_array() : FALSE;
+        return $result;
+
+    }
 }

@@ -19,7 +19,10 @@
         padding-left: 8%;
         padding-right: 33%;
     } */
-    
+    #wrapper > section{
+        padding: 18rem 0;
+        height: 100vh;
+    }
 </style>
 <section class="section">
     <div class="container">
