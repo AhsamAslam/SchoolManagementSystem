@@ -15,68 +15,74 @@ var studentsJSArray =  <?php echo json_encode($allStudents); ?>;
 
     <div class="row">
         <div class="col-md-12">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Student:</label>
+                <select class="browser-default custom-select school_select2" name="result_student" onchange='selectedStudentResult(this)' required>
+                    <option selected disabled value>Select Student</option>
+                    <?php if (!empty($students)) {
+                        $i = 0;
+                        foreach ($students as $row) {
+                            $i++;
+                            if ($result['result_student_id'] == $row["student_id"]) {  ?>
+                                <option value="<?php echo $row["student_id"]; ?>" selected><?php echo $row["student_name"]; ?></option>
+                            <?php } else { ?>
+                                <option value="<?php echo $row["student_id"]; ?>"><?php echo $row["student_name"]; ?></option>
+                            <?php } ?>
+                        <?php } ?>
+                    <?php } ?>
+                </select>
+                <?php echo form_error('result_student_id', '<p class="help-block text-danger">', '</p>'); ?>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Class:</label>
+                <select class="browser-default custom-select" name="result_student_class" id="studentClass" required>
+                    <option selected disabled value>Select Class</option>
+                    <?php if (!empty($classes)) {
+                        $i = 0;
+                        foreach ($classes as $row) {
+                            $i++;
+                            if ($result['result_student_class_id'] == $row["class_id"]) {  ?>
+                                <option value="<?php echo $row["class_id"]; ?>" selected><?php echo $row["class_name"]; ?></option>
+                            <?php } else { ?>
+                                <option value="<?php echo $row["class_id"]; ?>"><?php echo $row["class_name"]; ?></option>
+                            <?php } ?>
+                        <?php } ?>
+                    <?php } ?>
+                </select>
+                <?php echo form_error('result_student_class', '<p class="help-block text-danger">', '</p>'); ?>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Section:</label>
+                <select class="browser-default custom-select" name="result_student_class_section" id="studentSection" required >
+                    <option selected disabled value>Select Section</option>
+                    <?php if (!empty($sections)) {
+                        $i = 0;
+                        foreach ($sections as $row) {
+                            $i++;
+                            if ($result['result_student_class_section_id'] == $row["section_id"]) {  ?>
+                                <option value="<?php echo $row["section_id"]; ?>" selected><?php echo $row["section_name"]; ?></option>
+                            <?php } else { ?>
+                                <option value="<?php echo $row["section_id"]; ?>"><?php echo $row["section_name"]; ?></option>
+                            <?php } ?>
+                        <?php } ?>
+                    <?php } ?>
+                </select>
+                <?php echo form_error('result_student_class_section', '<p class="help-block text-danger">', '</p>'); ?>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
             <form method="post" action="" enctype="multipart/form-data">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Student:</label>
-                            <select class="browser-default custom-select school_select2" name="result_student" onchange='selectedStudentResult(this)' required>
-                                <option selected disabled value>Select Student</option>
-                                <?php if (!empty($students)) {
-                                    $i = 0;
-                                    foreach ($students as $row) {
-                                        $i++;
-                                        if ($result['result_student_id'] == $row["student_id"]) {  ?>
-                                            <option value="<?php echo $row["student_id"]; ?>" selected><?php echo $row["student_name"]; ?></option>
-                                        <?php } else { ?>
-                                            <option value="<?php echo $row["student_id"]; ?>"><?php echo $row["student_name"]; ?></option>
-                                        <?php } ?>
-                                    <?php } ?>
-                                <?php } ?>
-                            </select>
-                            <?php echo form_error('result_student_id', '<p class="help-block text-danger">', '</p>'); ?>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Class:</label>
-                            <select class="browser-default custom-select" name="result_student_class" id="studentClass" required>
-                                <option selected disabled value>Select Class</option>
-                                <?php if (!empty($classes)) {
-                                    $i = 0;
-                                    foreach ($classes as $row) {
-                                        $i++;
-                                        if ($result['result_student_class_id'] == $row["class_id"]) {  ?>
-                                            <option value="<?php echo $row["class_id"]; ?>" selected><?php echo $row["class_name"]; ?></option>
-                                        <?php } else { ?>
-                                            <option value="<?php echo $row["class_id"]; ?>"><?php echo $row["class_name"]; ?></option>
-                                        <?php } ?>
-                                    <?php } ?>
-                                <?php } ?>
-                            </select>
-                            <?php echo form_error('result_student_class', '<p class="help-block text-danger">', '</p>'); ?>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Section:</label>
-                            <select class="browser-default custom-select" name="result_student_class_section" id="studentSection" required >
-                                <option selected disabled value>Select Section</option>
-                                <?php if (!empty($sections)) {
-                                    $i = 0;
-                                    foreach ($sections as $row) {
-                                        $i++;
-                                        if ($result['result_student_class_section_id'] == $row["section_id"]) {  ?>
-                                            <option value="<?php echo $row["section_id"]; ?>" selected><?php echo $row["section_name"]; ?></option>
-                                        <?php } else { ?>
-                                            <option value="<?php echo $row["section_id"]; ?>"><?php echo $row["section_name"]; ?></option>
-                                        <?php } ?>
-                                    <?php } ?>
-                                <?php } ?>
-                            </select>
-                            <?php echo form_error('result_student_class_section', '<p class="help-block text-danger">', '</p>'); ?>
-                        </div>
-                    </div>
+                   
                 </div>
                 <div class="row pt-5">
                     <div class="col-md-12">
